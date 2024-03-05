@@ -21,6 +21,7 @@ from nltk.tokenize import word_tokenize # for word tokenization
 from nltk.stem import WordNetLemmatizer # for stemming words
 from sklearn.feature_extraction.text import CountVectorizer # for word counts
 from wordcloud import WordCloud # for creating word cloud
+from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
 
@@ -94,7 +95,7 @@ def clean_reviews(kdramas):
 # get clean reviews
 kdramas, reviews_clean = clean_reviews(kdramas)
 
-################################ TEXT ANALYSIS ################################
+################################# WORD COUNTS #################################
 
 # start with basic text analysis: counting the freqency of individual words
 
@@ -146,3 +147,53 @@ plt.figure(figsize=(10, 5))
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis('off')
 plt.show()
+
+################################ PHRASE COUNTS ################################
+
+# now we'll extract and count common phrases instead of words
+
+# get list of noun phrases using TextBlob
+def get_common_phrases(reviews):
+    '''
+    Generates list of phrases and counts the most common phrases using CountVectorizer.
+
+    Parameters
+    ----------
+    reviews: list or column of reviews
+
+    Returns
+    -------
+    most_common_phrases: list of all words and associated frequency
+    '''
+    noun_phrases_list = []
+
+    # generate phrases
+    for review in reviews:
+        pattern = re.compile(r'[^\w\s]')
+        kind_of_clean_review = re.sub(pattern, '', review).strip()
+        kind_of_clean_review = kind_of_clean_review.lower().strip()
+        blob = TextBlob(kind_of_clean_review)
+        noun_phrases = list(blob.noun_phrases)
+        noun_phrases_list.append(noun_phrases)
+
+    # count the most common phrases
+    # in order to use CountVectorizer we need to make each phrase into one term
+    noun_phrases_list_connected = [phrase.replace(' ', '_') for phrases in noun_phrases_list for phrase in phrases]
+
+    # initialize vectorizer to count common phrases
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(noun_phrases_list_connected)
+
+    # get an array of all phrases
+    phrases = vectorizer.get_feature_names_out()
+
+    # get phrase counts
+    phrase_counts = X.toarray().sum(axis=0)
+
+    # find the most common phrases
+    most_common_phrases = dict(zip(phrases, phrase_counts))
+    
+    return most_common_phrases
+
+
+most_common_phrases = get_common_phrases(kdramas['Review'])
