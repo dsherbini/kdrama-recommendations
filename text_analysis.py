@@ -24,7 +24,7 @@ from wordcloud import WordCloud # for creating word cloud
 from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
-
+# set wd
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
 # import k-drama data
@@ -111,8 +111,8 @@ def get_common_words(reviews_clean):
     Returns
     -------
     all_reviews: combined list of tokens from all reviews
-    most_common_words: list of all words and associated frequency
-    top_15_words: top 15 most common words
+    most_common_words: dictionary of all words and associated counts
+    top_15_words: list of top 15 most common words and associated counts
     '''
     # initialize vectorizer
     vectorizer = CountVectorizer()
@@ -163,7 +163,8 @@ def get_common_phrases(reviews):
 
     Returns
     -------
-    most_common_phrases: list of all words and associated frequency
+    noun_phrases_list_connected: list of all phrases (connected with an underscore)
+    most_common_phrases: dictionary of all phrases and associated counts
     '''
     noun_phrases_list = []
 
@@ -193,7 +194,16 @@ def get_common_phrases(reviews):
     # find the most common phrases
     most_common_phrases = dict(zip(phrases, phrase_counts))
     
-    return most_common_phrases
+    return noun_phrases_list_connected, most_common_phrases
 
 
-most_common_phrases = get_common_phrases(kdramas['Review'])
+noun_phrases_list_connected, most_common_phrases = get_common_phrases(kdramas['Review'])
+
+# create word cloud of common phrases
+wordcloud2 = WordCloud(width=800, height=400, background_color='white', 
+                      max_words=100).generate(' '.join(noun_phrases_list_connected))
+
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud2, interpolation='bilinear')
+plt.axis('off')
+plt.show()
