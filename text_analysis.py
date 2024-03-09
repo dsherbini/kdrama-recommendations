@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 # text analysis packages
 import spacy
 import nltk
+# nltk.download('punkt') # only need to run this once
 from textblob import TextBlob
 from nltk.corpus import wordnet
 import re # regular expressions
@@ -294,4 +295,81 @@ def get_similar_phrases(phrases, similarity_min, similarity_max):
 # note: this takes 45 seconds - 1 minute to run
 similar_phrases = get_similar_phrases(phrases, .8, .95)
 
+
+############################## SENTIMENT ANALYSIS ###############################
+
+# now we'll conduct sentiment analyses -- both general and for certain phrases
+
+# general sentiment analysis of each review
+def sentiment_reviews(df, reviews):
+    '''
+    Get polarity scores for each k-drama review.
+
+    Parameters
+    ----------
+    reviews: list or column containing original review text
+
+    Returns
+    -------
+    adds a column in the dataframe for polarity score
+        - polarity score refers to how positive or negative a set of text is
+        - scores closer to 1 are more positive
+        - scores closer to -1 are more negative
+        - scores closer to 0 are more neutral
+    '''
+    polarity_scores = []
+    # create a TextBlob object
+    for r in reviews:
+        blob = TextBlob(r)
+
+        # perform sentiment analysis
+        sentiment = blob.sentiment
+        polarity_scores.append(sentiment.polarity)
+    df['Polarity_Score'] = polarity_scores
+    return df
+
+kdramas = sentiment_reviews(kdramas, kdramas['Review'])
+
+# sentiment analysis for specific phrases
+def sentiment_around_phrase(sentence, phrase):
+    '''
+    Get polarity score of text surrounding a specific phrase.
+
+    Parameters
+    ----------
+    sentence: text to analysze
+    phrase: specific phrase within the text to analyze
+
+    Returns
+    -------
+    phrase_sentiment: average polarity score of text before and after the target phrase (-1 to 1)
+    '''
+    # convert to lowercase
+    sentence_lower = sentence.lower()
+    phrase_lower = phrase.lower()
+    
+    # find the start and end indices of the phrase in the sentence
+    if phrase_lower in sentence_lower:
+        start_index = sentence_lower.find(phrase_lower)
+        end_index = start_index + len(phrase_lower)
+    
+        # extract the text before and after the phrase
+        before_phrase = sentence[:start_index]
+        after_phrase = sentence[end_index:]
+    
+        # get polarity score of text before and after the phrase
+        before_sentiment = TextBlob(before_phrase).sentiment.polarity
+        after_sentiment = TextBlob(after_phrase).sentiment.polarity
+    
+        # get average sentiment of the surrounding context
+        phrase_sentiment = (before_sentiment + after_sentiment) / 2
+        return phrase_sentiment
+
+# get sentiment for a list of phrases, for all reviews
+target_phrases = ['female lead', 'FL', 'second female lead', 'male lead', 'ML', 'second male lead',
+                  'cast', 'main leads', 'ensemble cast', 'couple', 'side couples', 'plot', 'story', 
+                  'beginning', 'ending', 'romance', 'acting']
+
+for phrase in target_phrases:
+    kdramas[f'sentiment_{phrase}'] = kdramas['Review'].apply(lambda x: sentiment_around_phrase(x, phrase))
 
