@@ -177,7 +177,6 @@ def get_common_phrases(reviews):
         noun_phrases = list(blob.noun_phrases)
         noun_phrases_list.append(noun_phrases)
 
-    # count the most common phrases
     # in order to use CountVectorizer we need to make each phrase into one term
     noun_phrases_list_connected = [phrase.replace(' ', '_') for phrases in noun_phrases_list for phrase in phrases]
 
@@ -196,7 +195,7 @@ def get_common_phrases(reviews):
     
     return noun_phrases_list_connected, most_common_phrases
 
-
+# get phrase counts
 noun_phrases_list_connected, most_common_phrases = get_common_phrases(kdramas['Review'])
 
 # create word cloud of common phrases
@@ -207,3 +206,87 @@ plt.figure(figsize=(10, 5))
 plt.imshow(wordcloud2, interpolation='bilinear')
 plt.axis('off')
 plt.show()
+
+
+############################# SIMILARITY ANALYSIS #############################
+
+# now we will take the list of phrases and measure their similarity (i.e. phrase embedding) using Gensim packages
+from gensim.models import KeyedVectors
+from sklearn.metrics.pairwise import cosine_similarity
+
+# load Google's pre-trained Word2Vec model
+model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+
+# remove underscore from phrases/split into individual words
+phrases = noun_phrases_list_connected
+words = [phrase.split('_') for phrase in phrases]
+
+# write function to calculate phrase similarity
+def calculate_phrase_similarity(phrase1, phrase2, model):
+    ''' Calculate the similarity between two phrases using the cosine similarity between average embeddings.
+
+    Parameters
+    ----------
+    phrase1: phrase to use for comparison (string)
+    phrase2: phrase to use for comparison (string)
+    model: your trained word2vec model of choice
+
+    Returns
+    -------
+    similarity: a score between 0 to 1. A score of 1 means the two phrases are identical.
+    A score of 0 means the two words are not present in the training data.
+    '''
+    # split the phrases into individual words for easier processing
+    words1 = phrase1.split('_')
+    words2 = phrase2.split('_')
+    
+    # filter out words not in the model's vocabulary
+    words1 = [word for word in words1 if word in model.wv]
+    words2 = [word for word in words2 if word in model.wv]
+    
+    # if both phrases are empty after filtering, return a similarity score of 0
+    if not words1 or not words2:
+        return 0.0
+    
+    # calculate the average embedding for each phrase
+    avg_embedding1 = sum(model.wv[word] for word in words1) / len(words1)
+    avg_embedding2 = sum(model.wv[word] for word in words2) / len(words2)
+    
+    # calculate the cosine similarity between the average embeddings
+    similarity = cosine_similarity([avg_embedding1], [avg_embedding2])[0][0]
+    
+    # return numerical score
+    return similarity
+
+
+# find very similar phrases
+def get_similar_phrases(phrases, similarity_min, similarity_max):
+    '''
+    Get similar phrases by setting min and max similarity score thresholds.
+
+    Parameters
+    ----------
+    phrases: list of phrases to analyze (list of strings)
+    similarity_min: minimum similarity score (must be between 0 and 1)
+    similarity_max: maximum similarity score (must be between 0 and 1)
+
+    Returns
+    -------
+    similar_phrases: a dataframe of compared phrases and their similarity scores
+    '''
+    phrase_1 = []
+    phrase_2 = []
+    scores = []
+    for i in range(len(phrases)):
+        for j in range(i+1, len(phrases)):
+            similarity = calculate_phrase_similarity(phrases[i], phrases[j], model)
+            if similarity >= similarity_min and similarity < similarity_max:
+                phrase_1.append(phrases[i])
+                phrase_2.append(phrases[j])
+                scores.append(similarity)
+    similar_phrases = pd.DataFrame({'Phrase1':phrase_1, 'Phrase2':phrase_2, 'Similarity_Score':scores})
+    return similar_phrases
+
+# get similar phrases
+# note: this takes 45 seconds - 1 minute to run
+similar_phrases = get_similar_phrases(phrases, .8, .95)
