@@ -7,6 +7,7 @@ Date: February 2023
 # basic packages
 import os
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 # text analysis packages
@@ -23,6 +24,8 @@ from sklearn.feature_extraction.text import CountVectorizer # for word counts
 from wordcloud import WordCloud # for creating word cloud
 from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
+from sklearn.cluster import KMeans
+
 
 # set wd
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
@@ -290,3 +293,5 @@ def get_similar_phrases(phrases, similarity_min, similarity_max):
 # get similar phrases
 # note: this takes 45 seconds - 1 minute to run
 similar_phrases = get_similar_phrases(phrases, .8, .95)
+
+
