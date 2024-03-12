@@ -296,7 +296,7 @@ def get_similar_phrases(phrases, similarity_min, similarity_max):
 similar_phrases = get_similar_phrases(phrases, .8, .95)
 
 
-############################## SENTIMENT ANALYSIS ###############################
+############################# SENTIMENT ANALYSIS ##############################
 
 # now we'll conduct sentiment analyses -- both general and for certain phrases
 
@@ -370,6 +370,13 @@ target_phrases = ['female lead', 'FL', 'second female lead', 'male lead', 'ML', 
                   'cast', 'main leads', 'ensemble cast', 'couple', 'side couples', 'plot', 'story', 
                   'beginning', 'ending', 'romance', 'acting']
 
+# add sentiment scores as features in the data frame
 for phrase in target_phrases:
     kdramas[f'sentiment_{phrase}'] = kdramas['Review'].apply(lambda x: sentiment_around_phrase(x, phrase))
+
+
+############################# FEATURE EXTRACTION ##############################
+
+# now we will create some features in out data set based on most common words 
+# and phrases found in the previous analyses
 
