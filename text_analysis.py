@@ -337,7 +337,7 @@ def sentiment_around_phrase(sentence, phrase):
 
     Parameters
     ----------
-    sentence: text to analysze
+    sentence: text to analyze
     phrase: specific phrase within the text to analyze
 
     Returns
@@ -380,3 +380,46 @@ for phrase in target_phrases:
 # now we will create some features in out data set based on most common words 
 # and phrases found in the previous analyses
 
+def get_feature(df, text_column, new_column, word_list):
+    '''
+    Creates a binary feature in the k-drama data set if a list of relevant words 
+    exist in the review.
+    
+    Parameters
+    ----------
+    df: data frame of interest
+    text_column: column in df containing text to scan (string)
+    new_column: name of new column (string)
+    word_list: list of relevant words to search for in the review column
+
+    Returns
+    -------
+    DataFrame with the new column added
+    '''
+    # check to see if text column contains any word from specified list
+    def contains_word(text_column):
+        return 1 if any(word in text_column for word in word_list) else 0
+    
+    # apply contains_word function to create new column for the feature
+    df[new_column] = df[text_column].apply(contains_word)
+    
+    return df
+
+# create features based on the following target words
+feature_dict = {
+    'romance': ['romance', 'chemistry', 'cute', 'swoon'],
+    'kiss': ['kiss'],
+    'comedy':['comedy', 'comedic', 'funny', 'hilarious', 'laugh', 'laughed'],
+    'melodrama': ['melodrama', 'melodramatic'],
+    'wholesome': ['wholesome', 'sweet'],
+    'sad': ['sad', 'tear', 'tears', 'cry', 'bawl', 'bawling', 'tragic', 'heavy', 'suicide'],
+    'slow burn': ['slow', 'burn', 'boring'],
+    'tropey': ['trope', 'tropes', 'sterotype', 'miscommunication'],
+    'action':['action','intense','murder','villain','suspense', 'suspenseful']}
+
+for new_column, word_list in feature_dict.items():
+    get_feature(kdramas,'Reviews_Clean', new_column, word_list)
+    
+# save updated data frame with features to csv
+filepath = os.path.join(PATH,'kdramas_features')
+kdramas.to_csv(filepath,index=False,encoding='utf-8')
