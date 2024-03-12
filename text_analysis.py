@@ -25,8 +25,6 @@ from sklearn.feature_extraction.text import CountVectorizer # for word counts
 from wordcloud import WordCloud # for creating word cloud
 from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
-from sklearn.cluster import KMeans
-
 
 # set wd
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
