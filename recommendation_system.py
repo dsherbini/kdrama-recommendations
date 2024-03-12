@@ -8,15 +8,14 @@ Date: March 2023
 import os
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.metrics import jaccard_score
 
 # set wd
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
 # import k-drama data
-kdramas = pd.read_csv(os.path.join(PATH, 'kdramas_features'))
+kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features'))
+
 
 ################################ DATA CLEANING ################################
 
@@ -26,52 +25,53 @@ kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
 # fill NaNs with the general polarity scores for all continuous feature columns
 kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
 
-# split into continuous and binary features
-continuous_features = kdramas.iloc[:,1:19]
-binary_features = kdramas.iloc[:,20:]
+# for features df, set index as title
+features = kdramas.copy()
+features.set_index('Title', inplace=True)
 
 
 ############################### RECOMMENDATIONS ###############################
 
-
-def recommend_kdrama(selected_title, continuous_features, binary_features, n_recommendations=5):
+def recommend_kdrama(selected_title, features, n=5):
     '''
     Recommend kdramas to a user based on the selection of kdrama they have liked/watched. 
-    Measures similarity between kdramas using cosine similarity for continuous features
-    and Jaccard similarity for binary features.
+    Measures similarity between kdramas using cosine similarity.
     
     Parameters:
     selected_title: Title of the k-drama selected by the user
-    continuous_features: a df/matrix of continuous features where each column represents a kdrama
-    binary_features: a df/matrix of binary features where each column represents a kdrama
-    n_recommendations: The number of recommendations to make (default is 5)
+    features: A dataframe of features for each k-drama (with Title as the index)
+    n: The number of recommendations to make (default is 5)
     
     Returns:
     --------
     A list of recommended k-drama titles
     '''
     
-    # compute cosine similarity for continuous features
-    cosine_sim = cosine_similarity(continuous_features)
+    # select the features of the selected k-drama
+    selected_kdrama_features = features.loc[selected_title]
     
-    # compute Jaccard similarity for binary features
-    jaccard_sim = jaccard_score(binary_features, binary_features, average=None)
+    # convert the selected row to a numpy array and reshape it
+    selected_kdrama_features_array = np.array(selected_kdrama_features).reshape(1, -1)
     
-    # take the average of the two similarity scores
-    combined_sim = (cosine_sim + jaccard_sim) / 2
+    # calculate cosine similarity between the selected k-drama and all others
+    similarity_scores = cosine_similarity(selected_kdrama_features_array, features)
     
-    # get the top N most similar items
-    top_similar_items = np.argsort(combined_sim[selected_title], axis=0)[-n_recommendations:]
+    # set number of recommendations as inputted n value +1 
+    # (because similarity scores will include the selected title itself)
+    n_recommendations = n+1
     
-    return top_similar_items
+    # get the indices of the top N most similar k-dramas
+    top_indices = np.argsort(similarity_scores[0])[-n_recommendations:][::-1]
 
-cosine_sim = cosine_similarity(continuous_features)
+    # get the titles of the most similar k-dramas
+    recommended_kdramas = kdramas.iloc[top_indices].index
     
-    # compute Jaccard similarity for binary features
-jaccard_sim = jaccard_score(binary_features, binary_features, average=None)
+    # remove the selected title from the list of final recommendations
+    recommendations = [row for row in recommended_kdramas if row != selected_title]
     
-    # take the average of the two similarity scores
-combined_sim = (cosine_sim + jaccard_sim) / 2
-    
-    # get the top N most similar items
-top_similar_items = np.argsort(combined_sim[selected_title], axis=0)[-n_recommendations:]
+    return print(recommendations)
+
+recommend_kdrama('Once Upon a Small Town',features,5)
+
+
+
