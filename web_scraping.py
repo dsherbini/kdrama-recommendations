@@ -5,7 +5,6 @@ Date: January 2023
 """
 
 import os
-import re
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
