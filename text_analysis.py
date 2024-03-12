@@ -419,5 +419,5 @@ for new_column, word_list in feature_dict.items():
     get_feature(kdramas,'Reviews_Clean', new_column, word_list)
     
 # save updated data frame with features to csv
-filepath = os.path.join(PATH,'kdramas_features')
+filepath = os.path.join(PATH,'kdrama_data_with_features')
 kdramas.to_csv(filepath,index=False,encoding='utf-8')
