@@ -69,10 +69,4 @@ def recommend_kdrama(selected_title, features, n=5):
     # remove the selected title from the list of final recommendations
     recommendations = [row for row in recommended_kdramas if row != selected_title]
     
-    return print(recommendations)
-
-# get recommendations for a title
-recommend_kdrama('My Mister',features,5)
-
-
-
+    return recommendations
