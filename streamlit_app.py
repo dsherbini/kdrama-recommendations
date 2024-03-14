@@ -4,15 +4,32 @@ Title: Streamlit App
 Date: March 2023
 """
 
-PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
+#PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
 import streamlit as st
-import pandas as pd
-import numpy as np
-import os
-import sys
-sys.path.append(PATH)
-from recommendation_system import kdramas, features, recommend_kdrama
+import requests
+#import pandas as pd
+#import numpy as np
+#import os
+#import sys
+#sys.path.append(PATH)
+#from recommendation_system import kdramas, features, recommend_kdrama
+
+################################# PULL DATA ###################################
+
+# URL of the raw CSV file on GitHub
+url = 'https://github.com/dsherbini/kdrama-recommendations/blob/main/recommendation_system.py'
+
+# Fetch the file
+response = requests.get(url)
+
+# check if the request was successful
+if response.status_code == 200:
+    # read the CSV data into a pandas DataFrame
+    from recommendation_system import kdramas, features, recommend_kdrama
+else:
+    print("Failed to fetch the file")
+
 
 ##################################### APP #####################################
 
