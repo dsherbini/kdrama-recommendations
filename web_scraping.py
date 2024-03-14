@@ -91,11 +91,14 @@ def get_titles(soup):
     titles_edit1 = [s.replace('Korean Drama','') for s in titles_list]
     
     # filter out the 'edit' buttons
-    titles_edit2 = [s.replace('edit','') for s in titles_edit1]
+    final_titles = [s.replace('edit','') for s in titles_edit1]
     
     # filter out any movies or tv shows (want kdramas only)
-    titles_edit3 = [s for s in titles_edit2 if 'Korean Movie' not in s]
-    final_titles = [s for s in titles_edit3 if 'Inferno' not in s]
+    #titles_edit3 = [s for s in titles_edit2 if 'Korean Movie' not in s]
+    #titles_edit4 = [s for s in titles_edit3 if 'Tune in for Love' not in s]
+    #titles_edit5 = [s for s in titles_edit4 if 'Love and Leashes' not in s]
+    #titles_edit6 = [s for s in titles_edit5 if '20th Century Girl' not in s]
+    #final_titles = [s for s in titles_edit6 if 'Inferno' not in s]
     return final_titles
 
 def get_reviews(soup):
@@ -126,7 +129,14 @@ def save_df_to_csv(titles,reviews,filename,PATH):
     This avoids having to get new cookies and headers for get_data() every time.
     """
     data = pd.DataFrame({'Title':titles,'Review':reviews})
+    # removing a few movies from the dataframe
+    drop1 = data[data['Title'] == '20th Century Girl'].index
+    drop2 = data[data['Title'] == 'Love and Leashes'].index
+    drop3 = data[data['Title'] == 'Tune in for Love'].index
+    data = data.drop(drop1)
+    data = data.drop(drop2)
+    data = data.drop(drop3)
     filepath = os.path.join(PATH,filename)
     data.to_csv(filepath,index=False,encoding='utf-8')
 
-save_df_to_csv(titles, reviews, 'kdrama_data', '/Users/danya/Desktop/kdrama data')
+save_df_to_csv(titles, reviews, 'kdrama_data_march2023', '/Users/danya/Desktop/kdrama data')
