@@ -5,7 +5,7 @@ Date: March 2023
 """
 
 # load packages
-#import os
+import os
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -14,14 +14,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
 # load data
-kdramas = pd.read_csv('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations/kdrama_data_with_features')
+kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features'))
 
-#file_path = os.path.join(PATH, 'kdrama_data_with_features')
-#print(f"Attempting to read file from: {file_path}")
-#kdramas = pd.read_csv(file_path)
-
-
-################################ DATA LOADING AND CLEANING ################################
+################################ DATA CLEANING ################################
 
 # drop review columns from the df
 kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
