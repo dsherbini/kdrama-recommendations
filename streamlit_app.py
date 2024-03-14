@@ -4,28 +4,11 @@ Title: Streamlit App
 Date: March 2023
 """
 
-#PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
+PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
 import streamlit as st
-import requests
-#import sys
-#sys.path.append(PATH)
-
-################################# PULL DATA ###################################
-
-# URL from GitHub with global variables
-url = 'https://raw.githubusercontent.com/dsherbini/kdrama-recommendations/main/recommendation_system.py'
-
-# fetch the gihub url
-response = requests.get(url)
-
-# check if the request was successful
-if response.status_code == 200:
-    # execute the fetched Python code
-    exec(response.text, globals())
-else:
-    print("Failed to fetch the file")
-
+import sys
+sys.path.append(PATH)
 from recommendation_system import kdramas, features, recommend_kdrama
 
 ##################################### APP #####################################
