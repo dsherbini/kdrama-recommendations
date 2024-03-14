@@ -19,26 +19,14 @@ from recommendation_system import kdramas, features, recommend_kdrama
 # get list of kdrama titles
 titles = kdramas['Title'].unique()
 
-# store all recommendations in a dataframe
-recommendations = {}
-for title in titles:
-    reccos = recommend_kdrama(title, features)
-    recommendations.keys().append(title)
-    recommendations.values().append(reccos)
-    recommendations_df = pd.DataFrame(recommendations, columns = ['Title', 'Recommendations']
-
-
 # create a dropdown menu
 selected_title = st.selectbox('Select an K-Drama that you have watched before and enjoyed:', titles)
 
 # get recommendations for selected option
-recommendations = recommend_kdrama(selected_title, features)
+recommendations = recommend_kdrama(selected_title, features, n=5)
 
-if recommendations is None:
-    st.write("No recommendations found.")
-else:
-    for r in recommendations:
-        st.write(f'Recommended K-drama: {r}')
-
-
-recommend_kdrama('My Mister',features,5)
+# display the selected title and its recommendations
+st.write(f"Selected K-drama: {selected_title}")
+st.write("Recommended K-dramas:")
+for r in recommendations:
+    st.write(f' - {r}')
