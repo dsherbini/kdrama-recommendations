@@ -17,7 +17,7 @@ PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features'))
 
 
-################################ DATA CLEANING ################################
+################################ DATA LOADING AND CLEANING ################################
 
 # drop review columns from the df
 kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
@@ -29,6 +29,9 @@ kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
 features = kdramas.copy()
 features.set_index('Title', inplace=True)
 
+def load_data():
+    global kdramas, features
+    pass
 
 ############################### RECOMMENDATIONS ###############################
 
@@ -70,3 +73,5 @@ def recommend_kdrama(selected_title, features, n=5):
     recommendations = [row for row in recommended_kdramas if row != selected_title]
     
     return recommendations
+
+recommend_kdrama('My Mister', features)
