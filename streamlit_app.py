@@ -8,9 +8,6 @@ Date: March 2023
 
 import streamlit as st
 import requests
-#import pandas as pd
-#import numpy as np
-#import os
 #import sys
 #sys.path.append(PATH)
 
@@ -26,11 +23,10 @@ response = requests.get(url)
 if response.status_code == 200:
     # execute the fetched Python code
     exec(response.text, globals())
-    print(globals().keys())
 else:
     print("Failed to fetch the file")
 
-#from recommendation_system import kdramas, features, recommend_kdrama
+from recommendation_system import kdramas, features, recommend_kdrama
 
 ##################################### APP #####################################
 
