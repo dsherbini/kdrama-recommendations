@@ -13,8 +13,8 @@ sys.path.append(PATH)
 from recommendation_system import kdramas, features, recommend_kdrama
 
 # set wd
-os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
-print("Current working directory:", os.getcwd())
+#os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
+#print("Current working directory:", os.getcwd())
 
 ##################################### APP #####################################
 
