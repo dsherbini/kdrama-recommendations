@@ -71,7 +71,7 @@ def recommend_kdrama(selected_title, features, n=5):
     
     return print(recommendations)
 
-recommend_kdrama('Once Upon a Small Town',features,5)
+recommend_kdrama('My Mister',features,5)
 
 
 
