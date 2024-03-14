@@ -64,7 +64,7 @@ def recommend_kdrama(selected_title, features, n=5):
     top_indices = np.argsort(similarity_scores[0])[-n_recommendations:][::-1]
 
     # get the titles of the most similar k-dramas
-    recommended_kdramas = kdramas.iloc[top_indices].index
+    recommended_kdramas = features.iloc[top_indices].index
     
     # remove the selected title from the list of final recommendations
     recommendations = [row for row in recommended_kdramas if row != selected_title]
