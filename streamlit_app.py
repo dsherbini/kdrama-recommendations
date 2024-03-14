@@ -29,7 +29,7 @@ titles.insert(0, 'Select a k-drama')
 default_selected_index = 0 
 
 # create a dropdown menu for title
-selected_title = st.selectbox('Select a k-drama from the list below:', titles, index=default_selected_index)
+selected_title = st.selectbox('Select an k-drama from the list below:', titles, index=default_selected_index)
 
 # create a drop down menu for number of recommendations
 n_recommendations = range(1,11)
