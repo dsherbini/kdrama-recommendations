@@ -69,5 +69,3 @@ def recommend_kdrama(selected_title, features, n=5):
     recommendations = [row for row in recommended_kdramas if row != selected_title]
     
     return recommendations
-
-recommend_kdrama('My Mister', features)
