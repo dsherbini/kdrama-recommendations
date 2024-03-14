@@ -11,10 +11,13 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 # set wd
+os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
+print("Current working directory:", os.getcwd())
+
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
 # load data
-kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features'))
+kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features.csv'))
 
 ################################ DATA CLEANING ################################
 
@@ -69,3 +72,5 @@ def recommend_kdrama(selected_title, features, n=5):
     recommendations = [row for row in recommended_kdramas if row != selected_title]
     
     return recommendations
+
+
