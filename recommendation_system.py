@@ -5,7 +5,9 @@ Date: March 2023
 """
 
 # load packages
-import os
+import requests
+import io
+#import os
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -13,9 +15,32 @@ from sklearn.metrics.pairwise import cosine_similarity
 # set wd
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 
-# import k-drama data
-kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features'))
+# import k-drama data from github
+url = 'https://raw.githubusercontent.com/dsherbini/kdrama-recommendations/main/kdrama_data_with_features'
+response = requests.get(url)
 
+# check if the request was successful
+if response.status_code == 200:
+    # convert the response content to a StringIO object
+    csv_data = io.StringIO(response.text)
+    
+    # read the CSV data into a DataFrame
+    kdramas = pd.read_csv(csv_data)
+else:
+    print("Failed to fetch the file")
+
+
+
+
+
+
+
+#kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data_with_features'))
+
+# adding dfs to global variables
+def load_data():
+    global kdramas, features
+    pass
 
 ################################ DATA LOADING AND CLEANING ################################
 
@@ -29,9 +54,6 @@ kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
 features = kdramas.copy()
 features.set_index('Title', inplace=True)
 
-def load_data():
-    global kdramas, features
-    pass
 
 ############################### RECOMMENDATIONS ###############################
 
