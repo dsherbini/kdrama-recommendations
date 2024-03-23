@@ -16,6 +16,38 @@ from recommendation_system import kdramas, features, recommend_kdrama
 #os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
 #print("Current working directory:", os.getcwd())
 
+
+########################### HEARTBEAT MECHANISM ###############################
+
+# implement a heartbeat mechanism to routinely send a signal to the app to keep it awake
+
+import requests
+
+def send_heartbeat():
+    try:
+        response = requests.get('https://kdrama.streamlit.app')
+        print(f"Heartbeat sent. Response status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error sending heartbeat: {e}")
+
+# create background thread that calls the heartbeat function
+import threading
+import time
+
+def start_heartbeat_thread(interval_seconds):
+    def heartbeat_thread():
+        while True:
+            send_heartbeat()
+            time.sleep(interval_seconds)
+
+    # start the thread
+    thread = threading.Thread(target=heartbeat_thread)
+    thread.daemon = True # set as daemon = True so it will exit when the main program exits
+    thread.start()
+
+# start the heartbeat thread every 5 minutes
+start_heartbeat_thread(interval_seconds=300) 
+
 ##################################### APP #####################################
 
 # set title for the app
