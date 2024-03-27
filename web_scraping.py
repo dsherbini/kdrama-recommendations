@@ -1,7 +1,7 @@
 """
 Title: Web Scraping Data from My Drama List
 @author: dsherbini
-Date: January 2023
+Date: January 2024
 """
 
 import os
