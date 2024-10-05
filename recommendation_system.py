@@ -15,7 +15,7 @@ PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 os.chdir(PATH)
 
 # load data
-kdramas = pd.read_csv('data/kdrama_data_with_features.csv')
+kdramas = pd.read_csv(os.path.join(PATH, 'data','kdrama_data_with_features.csv'))
 
 ################################ DATA CLEANING ################################
 
