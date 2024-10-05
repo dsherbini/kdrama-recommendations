@@ -221,6 +221,7 @@ from gensim.models import KeyedVectors # this takes a few seconds to import
 from sklearn.metrics.pairwise import cosine_similarity
 
 # load Google's pre-trained Word2Vec model
+# download google news vectors here: https://www.kaggle.com/datasets/leadbest/googlenewsvectorsnegative300?resource=download
 model = KeyedVectors.load_word2vec_format('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations/data/GoogleNews-vectors-negative300.bin', binary=True, limit=500000)
 
 # remove underscore from phrases/split into individual words
@@ -421,7 +422,7 @@ feature_dict = {
 
 for new_column, word_list in feature_dict.items():
     get_feature(kdramas,'Reviews_Clean', new_column, word_list)
-    
+        
 # save updated data frame with features to csv
 filepath = os.path.join(PATH,'data/kdrama_data_with_features.csv')
 kdramas.to_csv(filepath,index=False,encoding='utf-8')
