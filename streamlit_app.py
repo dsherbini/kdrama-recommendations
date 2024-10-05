@@ -9,6 +9,7 @@ import streamlit as st
 
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 os.chdir(PATH)
+os.listdir()
 
 from recommendation_system import kdramas, features, recommend_kdrama
 
