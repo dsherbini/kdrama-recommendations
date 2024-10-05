@@ -1,5 +1,12 @@
-streamlit
-scikit-learn
-
-# Required for Gensim package bc of breaking error due to deprecation of scipy.linalg.triu (as of 4/2024)
-scipy==1.11.0
+beautifulsoup4==4.12.3
+gensim==4.3.3
+matplotlib==3.8.0
+nltk==3.8.1
+numpy==2.1.1
+pandas==2.2.3
+Requests==2.32.3
+scikit_learn==1.4.2
+spacy==3.5.4
+streamlit==1.32.1
+textblob==0.15.3
+wordcloud==1.9.3
