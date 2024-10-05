@@ -1,2 +1,5 @@
 streamlit
 scikit-learn
+
+# Required for Gensim package bc of breaking error due to deprecation of scipy.linalg.triu (as of 4/2024)
+scipy==1.11.0

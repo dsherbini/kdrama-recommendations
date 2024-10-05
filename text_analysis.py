@@ -26,11 +26,15 @@ from wordcloud import WordCloud # for creating word cloud
 from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
+
 # set wd
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
+os.chdir(PATH)
+os.getcwd()
 
 # import k-drama data
-kdramas = pd.read_csv(os.path.join(PATH, 'kdrama_data'))
+from web_scraping import get_dramas
+kdramas = get_dramas()
 
 ############################### TEXT PROCESSING ###############################
 
@@ -213,11 +217,11 @@ plt.show()
 ############################# SIMILARITY ANALYSIS #############################
 
 # now we will take the list of phrases and measure their similarity (i.e. phrase embedding) using Gensim packages
-from gensim.models import KeyedVectors
+from gensim.models import KeyedVectors # this takes a few seconds to import
 from sklearn.metrics.pairwise import cosine_similarity
 
 # load Google's pre-trained Word2Vec model
-model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+model = KeyedVectors.load_word2vec_format('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations/data/GoogleNews-vectors-negative300.bin', binary=True, limit=500000)
 
 # remove underscore from phrases/split into individual words
 phrases = noun_phrases_list_connected
@@ -243,16 +247,16 @@ def calculate_phrase_similarity(phrase1, phrase2, model):
     words2 = phrase2.split('_')
     
     # filter out words not in the model's vocabulary
-    words1 = [word for word in words1 if word in model.wv]
-    words2 = [word for word in words2 if word in model.wv]
+    words1 = [word for word in words1 if word in model]
+    words2 = [word for word in words2 if word in model]
     
     # if both phrases are empty after filtering, return a similarity score of 0
     if not words1 or not words2:
         return 0.0
     
     # calculate the average embedding for each phrase
-    avg_embedding1 = sum(model.wv[word] for word in words1) / len(words1)
-    avg_embedding2 = sum(model.wv[word] for word in words2) / len(words2)
+    avg_embedding1 = sum(model[word] for word in words1) / len(words1)
+    avg_embedding2 = sum(model[word] for word in words2) / len(words2)
     
     # calculate the cosine similarity between the average embeddings
     similarity = cosine_similarity([avg_embedding1], [avg_embedding2])[0][0]
@@ -290,7 +294,7 @@ def get_similar_phrases(phrases, similarity_min, similarity_max):
     return similar_phrases
 
 # get similar phrases
-# note: this takes 45 seconds - 1 minute to run
+# note: this takes 1-2 minutes to run
 similar_phrases = get_similar_phrases(phrases, .8, .95)
 
 
@@ -419,5 +423,5 @@ for new_column, word_list in feature_dict.items():
     get_feature(kdramas,'Reviews_Clean', new_column, word_list)
     
 # save updated data frame with features to csv
-filepath = os.path.join(PATH,'kdrama_data_with_features')
+filepath = os.path.join(PATH,'data/kdrama_data_with_features.csv')
 kdramas.to_csv(filepath,index=False,encoding='utf-8')
