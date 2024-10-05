@@ -7,7 +7,9 @@ Date: March 2023
 import os
 import streamlit as st
 
-os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
+PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
+os.chdir(PATH)
+
 from recommendation_system import kdramas, features, recommend_kdrama
 
 ########################### HEARTBEAT MECHANISM ###############################
