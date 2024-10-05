@@ -1,0 +1,4 @@
+# streamlit.yaml
+app:
+  title: K-Drama-Rama
+  description: A recommendation app for Korean dramas
