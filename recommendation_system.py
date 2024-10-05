@@ -11,7 +11,8 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 # set wd
-os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
+PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
+os.chdir(PATH)
 
 # load data
 kdramas = pd.read_csv('data/kdrama_data_with_features.csv')
