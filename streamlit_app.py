@@ -6,9 +6,11 @@ Date: March 2023
 
 import os
 import streamlit as st
+import sys
 
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 os.chdir(PATH)
+sys.path.append(PATH)
 os.listdir()
 
 from recommendation_system import kdramas, features, recommend_kdrama
