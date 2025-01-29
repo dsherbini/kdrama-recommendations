@@ -140,7 +140,7 @@ my_data = get_dramas(titles, links, reviews)
 # Save as csv file
 
 # designate output directory
-output_dir = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations/data'
+output_dir = './data'
 os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
 
 # designate filepath

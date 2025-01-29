@@ -8,8 +8,8 @@ Updated Jan 28, 2025
 """
 
 import streamlit as st
-from recommendation_system import recommend_kdrama
-from text_analysis2 import kdramas_final, features
+from utils.recommendation_system import recommend_kdrama
+from utils.text_analysis import kdramas_final, features
 
 # set title for the app
 st.title('Get k-drama recommendations')

@@ -6,6 +6,7 @@ credentials.ini
 .DS_Store
 config.ini
 *.ini
+*.bin
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
