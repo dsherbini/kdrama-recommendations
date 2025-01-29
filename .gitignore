@@ -4,7 +4,6 @@ secrets.toml
 password.txt
 credentials.ini
 .DS_Store
-data/
 config.ini
 *.ini
 
