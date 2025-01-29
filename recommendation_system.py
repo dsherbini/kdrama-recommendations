@@ -7,13 +7,11 @@ Date: March 2023
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-#from text_analysis import kdramas
-
-# set PATH
-#PATH = '/kdrama-recommendations/'
+from text_analysis2 import get_final_df
 
 # load data
-kdramas = pd.read_csv('data/kdrama_data_with_features.csv')
+kdramas = get_final_df()
+#kdramas = pd.read_csv('data/kdrama_data_with_features.csv')
 
 ################################ DATA CLEANING ################################
 
