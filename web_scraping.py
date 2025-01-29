@@ -1,7 +1,8 @@
 """
 Title: Web Scraping Data from My Drama List
 @author: dsherbini
-Date: January 2024
+Date Created: January 2024
+Last Updated: Oct 2024
 """
 
 import os
@@ -17,59 +18,60 @@ def get_data():
     this function uses cookies and headers converted to python from cURL in order to create the soup.
     Source: https://stackoverflow.com/questions/23102833/how-to-scrape-a-website-which-requires-login-using-python-and-beautifulsoup
     """
-    # cookies from site
+    
     cookies = {
-        '_ga_9MWM3T9VD7': 'GS1.1.1710268212.1.1.1710268822.48.0.0',
-        'FCNEC': '%5B%5B%22AKsRol-yvNPp3-jFu3xROeD7vfvhdr93H7iWOLYncI3kltzVa6MajB_zU7WHUKQ_BBkYo-S1KY7pINAFPskGW0t9SgW3ahtSEeDTz1-S3x4ftgK7NXm2FSWx4orY5iMhcq4WIl6jAX1yafJKHTeti_FykUSSFE9RZw%3D%3D%22%5D%5D',
-        'InstiSession': 'eyJpZCI6ImEwMmM5YmIxLTM1MDktNDUxYi1iYzMxLTZkNDMxNmRiYWQyOCIsInJlZmVycmVyIjoiIiwiY2FtcGFpZ24iOnsic291cmNlIjpudWxsLCJtZWRpdW0iOm51bGwsImNhbXBhaWduIjpudWxsLCJ0ZXJtIjpudWxsLCJjb250ZW50IjpudWxsfX0=',
-        '_au_1d': 'AU1D-0100-001710268213-7ACN1RPK-AIFK',
-        '_ga': 'GA1.2.64662309.1710268212',
-        '_gid': 'GA1.2.1541753162.1710268214',
-        '_pbjs_userid_consent_data': '3524755945110770',
+        'FCNEC': '%5B%5B%22AKsRol8LeV6YgD-FBubzW5wyKOlGBNFy41hNs5vVQrg_vGImISHzLuS5yHNmERLtsBR7VspKDt5uhudJqC4erXJb2sgTLLxCWWD54yyaXTBfk1qz6fzctYR6pWJaJfr5scu_lma0MbPqQFxjZDVc2KgvqV3ChiNBTQ%3D%3D%22%5D%5D',
+        '__eoi': 'ID=b2b7977e9a11cd30:T=1728086256:RT=1728090300:S=AA-AfjaTWuPmGyZBFgfNTNxSccmn',
+        '__gads': 'ID=87b0a1266201a393:T=1728086256:RT=1728090300:S=ALNI_MblGiwKA5OaYHgYkYZCsb9xg029aA',
+        '__gpi': 'UID=00000f3539b9af37:T=1728086256:RT=1728090300:S=ALNI_MZYc7fdacQEuHHCnXWNJsUBDk58JA',
+        '_au_1d': 'AU1D-0100-001728086256-424I0ELF-19JE',
+        '_ga': 'GA1.2.1323443072.1728086255',
+        '_ga_9MWM3T9VD7': 'GS1.1.1728089609.2.1.1728090298.59.0.0',
+        '_gid': 'GA1.2.492839727.1728086258',
+        'InstiSession': 'eyJpZCI6IjFmZjdiNjc0LTk4ODQtNDgzNi1iZjBkLWRjYjhlZmQyMjAwYSIsInJlZmVycmVyIjoibXlkcmFtYWxpc3QuY29tIiwiY2FtcGFpZ24iOnsic291cmNlIjpudWxsLCJtZWRpdW0iOm51bGwsImNhbXBhaWduIjpudWxsLCJ0ZXJtIjpudWxsLCJjb250ZW50IjpudWxsfX0=',
         'plsVisitorCity': 'Illinois',
         'plsVisitorGeo': 'US',
-        '_ga_FVWZ0RM4DH': 'GS1.1.1710268221.1.1.1710268819.35.0.0',
+        '_ga_FVWZ0RM4DH': 'GS1.1.1728089678.2.1.1728090297.60.0.0',
         '_mdl_dm': '0',
-        '_mdl_logged': '1710268765',
-        '__eoi': 'ID=b24da2f1a68eced4:T=1710268213:RT=1710268751:S=AA-AfjZCj3aQT66nQfz0Quu3WtOr',
-        '__gads': 'ID=7689928fb6cfb7df:T=1710268213:RT=1710268751:S=ALNI_MZjYEC8GasxrNBQ_GWqDhtwjmeMyg',
-        '__gpi': 'UID=00000dd1df98af49:T=1710268213:RT=1710268751:S=ALNI_Mbkl9kR7wUh4-5a5GH14uDFYbkYqw',
-        '__qca': 'I0-1557893108-1710268223350',
-        'instUid': '4f3c8f2c-8ffd-420c-b201-2b2a9cb6f9bd',
+        '_mdl_logged': '1728090367',
+        '__cflb': '04dToPqTexUPQvYwjCAo8qGUduzkzpTWNndDjEQzsV',
+        'cto_bundle': 'ApktxV96V0lyUUl0TkV4dXJaZjJ5VlZZUWpBTnRuSmptVXNZNnVPaDNQZ0tyZXFFUGRrNWhHeUcxM0VEa20yTWxtSjNUNWpuMTQ2RjNZdFNiVDdna3ZON3pLQTlsOWQydWhneTdDSURQYnYwT2dzdWxoWFlvVDNleHkwVlBxSXNsenhpTw',
+        'hb_insticator_uid': 'b13561a9-e536-47dc-b345-0b56c1e1d111',
         '_mdl_vau': '5caabf9fa5ac9d3e10ffe52441604160',
-        'jl_sess': '8f8bab3ba0cd0788b169ccdac6e1fa7ca0a53edb1cc3f465d31d8d0ce36004d0',
-        '_cc_id': 'be2460d307a6f0220f0ba5d419ebd0aa',
-        '_pubcid': 'ba8abc78-2731-42d3-a919-64cd8620cc59',
-        'panoramaId': '148b98e223db4cd9561b5472e72c185ca02cdb3137449d7b90eceda6d776a5df',
-        'panoramaIdType': 'panoDevice',
-        'panoramaId_expiry': '1710873012804',
-        'instiPubProvided': '427114fc-ee9c-478c-bd75-06efd2a0d3d4',
-        'plsGeoObj': '{"ip":"73.36.161.220","country":"US","region":"IL","city":"Chicago","zip":"60637","location":"41.7821,-87.6046"}',
-        'plsVisitorIp': '73.36.161.220',
-        '__cflb': '04dToPqTexUPQvYwjCAo8qGUduzkzpTVDzCume6Kx7',
+        'jl_sess': 'f20a5aa75b79a6cd48ba914857dd0c37005dc55ed8a63e5168f576c9c540a1be',
+        'cto_bidid': 'hIr8Q19SbzBDVVV5NkdmODR3SWdjOSUyQmZPT3B6ZTVZNDElMkZOWHRQSzJCNWFjZkxWWU0lMkIlMkZ1aG8lMkJJVFAyTE9LQ3kyZVI1eCUyQnU3ZDE4d1F5Nk5wdUJDbGc5TExtZyUzRCUzRA',
+        '_cc_id': 'aa203554cbae3dd2ea8c8c11764c3abf',
+        'panoramaId_expiry': '1728172660104',
+        '_lc2_fpi': '41506042aaa6--01j9czfe3xgf681jcz7v6bp2a1',
+        '_li_dcdm_c': '.mydramalist.com',
+        '_pubcid': 'f67af9f9-a06d-4972-980a-c9e109d08378',
+        '_pubcid_cst': 'zix7LPQsHA%3D%3D',
+        '_lr_env_src_ats': 'false',
+        '33acrossIdFp': '%2B3wZerla%2BsxZtnyyUEqwar%2BEMLaQwxcStP785WfJ9Z%2F4aIYOXTc8F0u3Y64pa8G4hyv0NxKWHza95VezQIdu%2FA%3D%3D',
+        '__qca': 'I0-588004007-1728086256151',
+        'instiPubProvided': '4b57290c-7893-4568-bb98-4958e92409f8',
+        'plsGeoObj': '{"ip":"140.248.30.69","country":"US","region":"IL","city":"Schaumburg","zip":"60159","location":"42.0317,-88.0833"}',
+        'plsVisitorIp': '140.248.30.69',
     }
     
-    # headers from the site. leave comments as is.
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Sec-Fetch-Site': 'same-origin',
-        # 'Cookie': '_ga_9MWM3T9VD7=GS1.1.1710268212.1.1.1710268822.48.0.0; FCNEC=%5B%5B%22AKsRol-yvNPp3-jFu3xROeD7vfvhdr93H7iWOLYncI3kltzVa6MajB_zU7WHUKQ_BBkYo-S1KY7pINAFPskGW0t9SgW3ahtSEeDTz1-S3x4ftgK7NXm2FSWx4orY5iMhcq4WIl6jAX1yafJKHTeti_FykUSSFE9RZw%3D%3D%22%5D%5D; InstiSession=eyJpZCI6ImEwMmM5YmIxLTM1MDktNDUxYi1iYzMxLTZkNDMxNmRiYWQyOCIsInJlZmVycmVyIjoiIiwiY2FtcGFpZ24iOnsic291cmNlIjpudWxsLCJtZWRpdW0iOm51bGwsImNhbXBhaWduIjpudWxsLCJ0ZXJtIjpudWxsLCJjb250ZW50IjpudWxsfX0=; _au_1d=AU1D-0100-001710268213-7ACN1RPK-AIFK; _ga=GA1.2.64662309.1710268212; _gid=GA1.2.1541753162.1710268214; _pbjs_userid_consent_data=3524755945110770; plsVisitorCity=Illinois; plsVisitorGeo=US; _ga_FVWZ0RM4DH=GS1.1.1710268221.1.1.1710268819.35.0.0; _mdl_dm=0; _mdl_logged=1710268765; __eoi=ID=b24da2f1a68eced4:T=1710268213:RT=1710268751:S=AA-AfjZCj3aQT66nQfz0Quu3WtOr; __gads=ID=7689928fb6cfb7df:T=1710268213:RT=1710268751:S=ALNI_MZjYEC8GasxrNBQ_GWqDhtwjmeMyg; __gpi=UID=00000dd1df98af49:T=1710268213:RT=1710268751:S=ALNI_Mbkl9kR7wUh4-5a5GH14uDFYbkYqw; __qca=I0-1557893108-1710268223350; instUid=4f3c8f2c-8ffd-420c-b201-2b2a9cb6f9bd; _mdl_vau=5caabf9fa5ac9d3e10ffe52441604160; jl_sess=8f8bab3ba0cd0788b169ccdac6e1fa7ca0a53edb1cc3f465d31d8d0ce36004d0; _cc_id=be2460d307a6f0220f0ba5d419ebd0aa; _pubcid=ba8abc78-2731-42d3-a919-64cd8620cc59; panoramaId=148b98e223db4cd9561b5472e72c185ca02cdb3137449d7b90eceda6d776a5df; panoramaIdType=panoDevice; panoramaId_expiry=1710873012804; instiPubProvided=427114fc-ee9c-478c-bd75-06efd2a0d3d4; plsGeoObj={"ip":"73.36.161.220","country":"US","region":"IL","city":"Chicago","zip":"60637","location":"41.7821,-87.6046"}; plsVisitorIp=73.36.161.220; __cflb=04dToPqTexUPQvYwjCAo8qGUduzkzpTVDzCume6Kx7',
+        # 'Cookie': 'FCNEC=%5B%5B%22AKsRol8LeV6YgD-FBubzW5wyKOlGBNFy41hNs5vVQrg_vGImISHzLuS5yHNmERLtsBR7VspKDt5uhudJqC4erXJb2sgTLLxCWWD54yyaXTBfk1qz6fzctYR6pWJaJfr5scu_lma0MbPqQFxjZDVc2KgvqV3ChiNBTQ%3D%3D%22%5D%5D; __eoi=ID=b2b7977e9a11cd30:T=1728086256:RT=1728090300:S=AA-AfjaTWuPmGyZBFgfNTNxSccmn; __gads=ID=87b0a1266201a393:T=1728086256:RT=1728090300:S=ALNI_MblGiwKA5OaYHgYkYZCsb9xg029aA; __gpi=UID=00000f3539b9af37:T=1728086256:RT=1728090300:S=ALNI_MZYc7fdacQEuHHCnXWNJsUBDk58JA; _au_1d=AU1D-0100-001728086256-424I0ELF-19JE; _ga=GA1.2.1323443072.1728086255; _ga_9MWM3T9VD7=GS1.1.1728089609.2.1.1728090298.59.0.0; _gid=GA1.2.492839727.1728086258; InstiSession=eyJpZCI6IjFmZjdiNjc0LTk4ODQtNDgzNi1iZjBkLWRjYjhlZmQyMjAwYSIsInJlZmVycmVyIjoibXlkcmFtYWxpc3QuY29tIiwiY2FtcGFpZ24iOnsic291cmNlIjpudWxsLCJtZWRpdW0iOm51bGwsImNhbXBhaWduIjpudWxsLCJ0ZXJtIjpudWxsLCJjb250ZW50IjpudWxsfX0=; plsVisitorCity=Illinois; plsVisitorGeo=US; _ga_FVWZ0RM4DH=GS1.1.1728089678.2.1.1728090297.60.0.0; _mdl_dm=0; _mdl_logged=1728090367; __cflb=04dToPqTexUPQvYwjCAo8qGUduzkzpTWNndDjEQzsV; cto_bundle=ApktxV96V0lyUUl0TkV4dXJaZjJ5VlZZUWpBTnRuSmptVXNZNnVPaDNQZ0tyZXFFUGRrNWhHeUcxM0VEa20yTWxtSjNUNWpuMTQ2RjNZdFNiVDdna3ZON3pLQTlsOWQydWhneTdDSURQYnYwT2dzdWxoWFlvVDNleHkwVlBxSXNsenhpTw; hb_insticator_uid=b13561a9-e536-47dc-b345-0b56c1e1d111; _mdl_vau=5caabf9fa5ac9d3e10ffe52441604160; jl_sess=f20a5aa75b79a6cd48ba914857dd0c37005dc55ed8a63e5168f576c9c540a1be; cto_bidid=hIr8Q19SbzBDVVV5NkdmODR3SWdjOSUyQmZPT3B6ZTVZNDElMkZOWHRQSzJCNWFjZkxWWU0lMkIlMkZ1aG8lMkJJVFAyTE9LQ3kyZVI1eCUyQnU3ZDE4d1F5Nk5wdUJDbGc5TExtZyUzRCUzRA; _cc_id=aa203554cbae3dd2ea8c8c11764c3abf; panoramaId_expiry=1728172660104; _lc2_fpi=41506042aaa6--01j9czfe3xgf681jcz7v6bp2a1; _li_dcdm_c=.mydramalist.com; _pubcid=f67af9f9-a06d-4972-980a-c9e109d08378; _pubcid_cst=zix7LPQsHA%3D%3D; _lr_env_src_ats=false; 33acrossIdFp=%2B3wZerla%2BsxZtnyyUEqwar%2BEMLaQwxcStP785WfJ9Z%2F4aIYOXTc8F0u3Y64pa8G4hyv0NxKWHza95VezQIdu%2FA%3D%3D; __qca=I0-588004007-1728086256151; instiPubProvided=4b57290c-7893-4568-bb98-4958e92409f8; plsGeoObj={"ip":"140.248.30.69","country":"US","region":"IL","city":"Schaumburg","zip":"60159","location":"42.0317,-88.0833"}; plsVisitorIp=140.248.30.69',
         'Sec-Fetch-Dest': 'document',
         'Accept-Language': 'en-US,en;q=0.9',
         'Sec-Fetch-Mode': 'navigate',
         'Host': 'mydramalist.com',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.1 Safari/605.1.15',
-        'Referer': 'https://mydramalist.com/dramalist/Mystic_pub',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15',
+        'Referer': 'https://mydramalist.com/dramalist/Mystic_pub/completed',
         # 'Accept-Encoding': 'gzip, deflate, br',
         'Connection': 'keep-alive',
     }
     
-    # params
     params = {
         'notes': '1',
-        }
+    }
     
-    # get response from cookies, headers, and params above using below URL
     response = requests.get('https://mydramalist.com/dramalist/Mystic_pub/completed', params=params, cookies=cookies, headers=headers)
     
     # get soup
@@ -93,12 +95,6 @@ def get_titles(soup):
     # filter out the 'edit' buttons
     final_titles = [s.replace('edit','') for s in titles_edit1]
     
-    # filter out any movies or tv shows (want kdramas only)
-    #titles_edit3 = [s for s in titles_edit2 if 'Korean Movie' not in s]
-    #titles_edit4 = [s for s in titles_edit3 if 'Tune in for Love' not in s]
-    #titles_edit5 = [s for s in titles_edit4 if 'Love and Leashes' not in s]
-    #titles_edit6 = [s for s in titles_edit5 if '20th Century Girl' not in s]
-    #final_titles = [s for s in titles_edit6 if 'Inferno' not in s]
     return final_titles
 
 def get_reviews(soup):
@@ -121,22 +117,17 @@ soup = get_data()
 titles = get_titles(soup)
 reviews = get_reviews(soup)
 
-
-# join titles and reviews into a data frame and convert to csv
-def save_df_to_csv(titles,reviews,filename,PATH):
+# join titles and reviews into a data frame
+def get_dramas():
     """
-    Converts lists of titles and reviews to DataFrame and saves to a CSV file.
-    This avoids having to get new cookies and headers for get_data() every time.
+    Converts lists of titles and reviews to DataFrame.
     """
     data = pd.DataFrame({'Title':titles,'Review':reviews})
     # removing a few movies from the dataframe
-    drop1 = data[data['Title'] == '20th Century Girl'].index
-    drop2 = data[data['Title'] == 'Love and Leashes'].index
-    drop3 = data[data['Title'] == 'Tune in for Love'].index
-    data = data.drop(drop1)
-    data = data.drop(drop2)
-    data = data.drop(drop3)
-    filepath = os.path.join(PATH,filename)
-    data.to_csv(filepath,index=False,encoding='utf-8')
-
-save_df_to_csv(titles, reviews, 'kdrama_data_march2023', '/Users/danya/Desktop/kdrama data')
+    movie1 = data[data['Title'] == '20th Century Girl'].index
+    movie2 = data[data['Title'] == 'Love and Leashes'].index
+    movie3 = data[data['Title'] == 'Tune in for Love'].index
+    data = data.drop(movie1)
+    data = data.drop(movie2)
+    data = data.drop(movie3)
+    return data

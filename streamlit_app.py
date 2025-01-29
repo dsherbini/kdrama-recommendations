@@ -4,18 +4,13 @@ Title: Streamlit App
 Date: March 2023
 """
 
-#import os
+import os
 import streamlit as st
 import sys
 
 PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
 sys.path.append(PATH)
 from recommendation_system import kdramas, features, recommend_kdrama
-
-# set wd
-#os.chdir('/Users/danya/Documents/GitHub/personal github/kdrama-recommendations')
-#print("Current working directory:", os.getcwd())
-
 
 ########################### HEARTBEAT MECHANISM ###############################
 
@@ -50,6 +45,17 @@ start_heartbeat_thread(interval_seconds=300)
 
 ##################################### APP #####################################
 
+# page configuration
+st.set_page_config(
+    page_title='K-Drama-Rama',
+    page_icon='sparkles',
+    layout='centered',
+    initial_sidebar_state='auto',
+    menu_items={
+        'Report a bug': 'https://github.com/dsherbini/kdrama-recommendations/issues',
+        'About': "Hi, I'm Danya. I made K-Drama-Rama because I love to watch Korean dramas. The recommendations in this app are based on the dramas I've personally watched and my own analysis. For more information on how I generated these recommendations and how I built this app, feel free to check out my GitHub."
+    }
+)
 # set title for the app
 st.title('K-Drama-Rama!')
 
@@ -84,6 +90,8 @@ if selected_title != 'Select a k-drama':
 # add a footer to bottom of app page
 st.markdown("""
 <p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
-© 2024 Danya Sherbini | <a href="https://www.linkedin.com/in/danyasherbini/" target="_blank">LinkedIn</a> | <a href='https://github.com/dsherbini' target="_blank">GitHub</a>
+© 2024 Danya Sherbini | <a href='https://github.com/dsherbini' target="_blank">GitHub</a>
 </p>
 """, unsafe_allow_html=True)
+
+
