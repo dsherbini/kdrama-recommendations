@@ -28,7 +28,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
 
 # import k-drama data
-from web_scraping2 import my_dramas
+from scraper import my_data
 
 ############################### TEXT PROCESSING ###############################
 
@@ -93,7 +93,7 @@ def clean_reviews(kdramas):
     return kdramas, reviews_clean
 
 # get clean reviews
-kdramas, reviews_clean = clean_reviews(my_dramas)
+kdramas, reviews_clean = clean_reviews(my_data)
 
 ################################# WORD COUNTS #################################
 
