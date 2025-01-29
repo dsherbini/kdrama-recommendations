@@ -21,7 +21,7 @@ st.set_page_config(
 
 # Pages
 welcome = st.Page('welcome.py',title='Welcome',icon='✨')
-recs = st.Page('recs.py', title='Bills - Tabs + Expander', icon='✨')
+recs = st.Page('recs.py', title='Recommendations', icon='✨')
 
 # Build navigation bar
 pg = st.navigation([welcome,recs])
