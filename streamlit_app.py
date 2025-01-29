@@ -34,9 +34,9 @@ pg = st.navigation([welcome,recs],expanded=False)
 #    link="https://techequity.us"
 #)
 
-# add a footer to bottom of app page
+# Add a footer to the bottom-right corner of the app page
 st.markdown("""
-<p style="font-size: 0.8em; text-align: right; position: fixed; bottom: 0; width: 100%;">
+<p style="font-size: 0.8em; text-align: right; position: fixed; bottom: 0; right: 0; margin: 0.5em;">
 © 2025 Danya Sherbini</p>
 """, unsafe_allow_html=True)
 
