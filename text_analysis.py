@@ -11,8 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # text analysis packages
-#import spacy
-#import nltk
+import spacy
+import nltk
 # nltk.download('punkt') # only need to run this once
 from textblob import TextBlob
 from nltk.corpus import wordnet
@@ -415,12 +415,8 @@ feature_dict = {
     'tropey': ['trope', 'tropes', 'sterotype', 'miscommunication'],
     'action':['action','intense','murder','villain','suspense', 'suspenseful']}
 
-def get_kdramas_with_features():
-    for new_column, word_list in feature_dict.items():
-        kdramas_with_features = get_feature(kdramas,'Reviews_Clean', new_column, word_list)
-        return kdramas_with_features
-    
-kdramas_with_features = get_kdramas_with_features()
+for new_column, word_list in feature_dict.items():
+    get_feature(kdramas,'Reviews_Clean', new_column, word_list)
         
 # save updated data frame with features to csv
 #filepath = os.path.join(PATH,'data/kdrama_data_with_features.csv')
