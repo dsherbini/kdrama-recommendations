@@ -24,7 +24,7 @@ welcome = st.Page('welcome.py',title='Welcome',icon='✨')
 recs = st.Page('recs.py', title='Recommendations', icon='✨')
 
 # Build navigation bar
-pg = st.navigation([welcome,recs],expanded=False, position='hidden')
+pg = st.navigation([welcome,recs],expanded=False)
 
 # Add logo
 #logo = './assets/logo.png'
