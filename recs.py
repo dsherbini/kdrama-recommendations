@@ -8,7 +8,8 @@ Updated Jan 28, 2025
 """
 
 import streamlit as st
-from recommendation_system import kdramas, features, recommend_kdrama
+from recommendation_system import recommend_kdrama
+from text_analysis2 import kdramas_final, features
 
 # set title for the app
 st.title('Get k-drama recommendations')
@@ -17,7 +18,7 @@ st.title('Get k-drama recommendations')
 st.markdown('Select a k-drama that you have watched and enjoyed from the list below and get recommendations.')
 
 # get list of kdrama titles
-titles = list(kdramas['Title'].unique())
+titles = list(kdramas_final['Title'].unique())
 
 # add a default option to the title list
 titles.insert(0, 'Select a k-drama')

@@ -39,20 +39,20 @@ def get_latest_file(data_folder='data_new'):
 latest_file = get_latest_file()
 
 # Load the most recent file
-kdramas = pd.read_csv(latest_file)
-print(f"Loaded file: {latest_file}")
+#kdramas = pd.read_csv(latest_file)
+#print(f"Loaded file: {latest_file}")
 
 ################################ DATA CLEANING ################################
 
 # drop review columns from the df
-kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
+#kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
 
 # fill NaNs with the general polarity scores for all continuous feature columns
-kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
+#kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
 
 # for features df, set index as title
-features = kdramas.copy()
-features.set_index('Title', inplace=True)
+#features = kdramas.copy()
+#features.set_index('Title', inplace=True)
 
 
 ############################### RECOMMENDATIONS ###############################

@@ -94,7 +94,7 @@ def clean_reviews(kdramas):
     return kdramas, reviews_clean
 
 # get clean reviews
-kdramas_clean, reviews_clean = clean_reviews(kdramas)
+kdramas, reviews_clean = clean_reviews(kdramas)
 
 ################################# WORD COUNTS #################################
 
@@ -197,7 +197,7 @@ def get_common_phrases(reviews):
     return noun_phrases_list_connected, most_common_phrases
 
 # get phrase counts
-noun_phrases_list_connected, most_common_phrases = get_common_phrases(kdramas_clean['Review'])
+noun_phrases_list_connected, most_common_phrases = get_common_phrases(kdramas['Review'])
 
 # create word cloud of common phrases
 wordcloud2 = WordCloud(width=800, height=400, background_color='white', 
@@ -327,7 +327,7 @@ def sentiment_reviews(df, reviews):
     df['Polarity_Score'] = polarity_scores
     return df
 
-kdramas_clean_sentiment = sentiment_reviews(kdramas_clean, kdramas['Review'])
+kdramas = sentiment_reviews(kdramas, kdramas['Review'])
 
 # sentiment analysis for specific phrases
 def sentiment_around_phrase(sentence, phrase):
@@ -371,7 +371,7 @@ target_phrases = ['female lead', 'FL', 'second female lead', 'male lead', 'ML', 
 
 # add sentiment scores as features in the data frame
 for phrase in target_phrases:
-    kdramas_clean_sentiment[f'sentiment_{phrase}'] = kdramas_clean_sentiment['Review'].apply(lambda x: sentiment_around_phrase(x, phrase))
+    kdramas[f'sentiment_{phrase}'] = kdramas['Review'].apply(lambda x: sentiment_around_phrase(x, phrase))
 
 
 ############################# FEATURE EXTRACTION ##############################
@@ -386,7 +386,7 @@ def get_feature(df, text_column, new_column, word_list):
     
     Parameters
     ----------
-    df: data frame of interest
+    df: data frame of interest (i.e. kdramas df)
     text_column: column in df containing text to scan (string)
     new_column: name of new column (string)
     word_list: list of relevant words to search for in the review column
@@ -395,32 +395,71 @@ def get_feature(df, text_column, new_column, word_list):
     -------
     DataFrame with the new column added
     '''
-    # check to see if text column contains any word from specified list
-    def contains_word(text_column):
-        return 1 if any(word in text_column for word in word_list) else 0
+    # Check if the reviews column is empty or contains only stop words
+    if df[text_column].isnull().all() or df[text_column].empty:
+        raise ValueError(f"The column '{text_column}' contains no valid reviews.")
     
-    # apply contains_word function to create new column for the feature
+    # Check to see if text column contains any word from specified list
+    def contains_word(text):
+        return 1 if any(word in text for word in word_list) else 0
+    
+    # Apply contains_word function to create new column for the feature
     df[new_column] = df[text_column].apply(contains_word)
     
     return df
 
-# create features based on the following target words
-feature_dict = {
-    'romance': ['romance', 'chemistry', 'cute', 'swoon'],
-    'kiss': ['kiss'],
-    'comedy':['comedy', 'comedic', 'funny', 'hilarious', 'laugh', 'laughed'],
-    'melodrama': ['melodrama', 'melodramatic'],
-    'wholesome': ['wholesome', 'sweet'],
-    'sad': ['sad', 'tear', 'tears', 'cry', 'bawl', 'bawling', 'tragic', 'heavy', 'suicide'],
-    'slow burn': ['slow', 'burn', 'boring'],
-    'tropey': ['trope', 'tropes', 'sterotype', 'miscommunication'],
-    'action':['action','intense','murder','villain','suspense', 'suspenseful']}
 
-for new_column, word_list in feature_dict.items():
-    get_feature(kdramas_clean_sentiment,'Reviews_Clean', new_column, word_list)
+def process_kdrama_features(df, text_column='Reviews_Clean'):
+    '''
+    Processes the k-drama dataset to add binary features based on the reviews column 
+    using a pre-defined word list.
+    
+    Parameters
+    ----------
+    df: data frame of interest
+    text_column: column in df containing text to scan (string, default 'Reviews_Clean')
 
+    Returns
+    -------
+    DataFrame with the new binary features added
+    '''
+    # Define the target word lists for feature creation
+    feature_dict = {
+        'romance': ['romance', 'chemistry', 'cute', 'swoon'],
+        'kiss': ['kiss'],
+        'comedy': ['comedy', 'comedic', 'funny', 'hilarious', 'laugh', 'laughed'],
+        'melodrama': ['melodrama', 'melodramatic'],
+        'wholesome': ['wholesome', 'sweet'],
+        'sad': ['sad', 'tear', 'tears', 'cry', 'bawl', 'bawling', 'tragic', 'heavy', 'suicide'],
+        'slow burn': ['slow', 'burn', 'boring'],
+        'tropey': ['trope', 'tropes', 'sterotype', 'miscommunication'],
+        'action': ['action','intense','murder','villain','suspense', 'suspenseful']
+    }
+    
+    # Add features based on the word lists in feature_dict
+    for new_column, word_list in feature_dict.items():
+        df = get_feature(df, text_column, new_column, word_list)
+    
+    return df
 
-# rename final data
-kdramas_final = kdramas_clean_sentiment
+# Process the DataFrame and add the new features
+kdramas_final = process_kdrama_features(kdramas)
+
+# Process final kdramas df to get features
+
+def process_features(df):
+    # drop review columns from the df
+    df = df.drop(['Review','Reviews_Clean'],axis = 1)
+
+    # fill NaNs with the general polarity scores for all continuous feature columns
+    df = df.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
+
+    # for features df, set index as title
+    features = df.copy()
+    features.set_index('Title', inplace=True)
+    
+    return features
+
+features = process_features(kdramas_final)
 
 
