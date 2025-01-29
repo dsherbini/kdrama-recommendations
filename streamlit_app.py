@@ -10,7 +10,7 @@ import streamlit as st
 st.set_page_config(
     page_title='K-Drama-Rama',
     page_icon='✨',
-    layout='centered',
+    layout='wide',
     initial_sidebar_state='auto',
     menu_items={
         'Get help': None,
@@ -24,7 +24,7 @@ welcome = st.Page('welcome.py',title='Welcome',icon='✨')
 recs = st.Page('recs.py', title='Recommendations', icon='✨')
 
 # Build navigation bar
-pg = st.navigation([welcome,recs])
+pg = st.navigation([welcome,recs],expanded=False)
 
 # Add logo
 #logo = './assets/logo.png'

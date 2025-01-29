@@ -1,8 +1,8 @@
 #config.toml
 
 [theme]
-primaryColor="#C8A1E0"
-backgroundColor="#F7EFE5"
-secondaryBackgroundColor="#E2BFD9"
-textColor="#674188"
-font="sans serif"
+primaryColor="#D4BEE4"
+backgroundColor="#EEEEEE"
+secondaryBackgroundColor="#9B7EBD"
+textColor="#3B1E54"
+font="serif"
