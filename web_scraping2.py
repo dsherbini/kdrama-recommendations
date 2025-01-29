@@ -118,18 +118,17 @@ def get_reviews(soup):
     return final_reviews
 
 
+# get soup, titles, and reviews
+soup = get_data()
+titles = get_titles(soup)
+reviews = get_reviews(soup)
 
 # join titles and reviews into a data frame
-def get_dramas():
+def get_dramas(titles, reviews):
     """
-    Gets soup, titles, and reviews and then converts to DataFrame.
+    Convert soup, titles, and reviews to final dataframe.
     """
-    # get soup, titles, and reviews
-    soup = get_data()
-    titles = get_titles(soup)
-    reviews = get_reviews(soup)
-    
-    # combine titles and reviews into datafram
+    # combine titles and reviews into dataframe
     data = pd.DataFrame({'Title':titles,'Review':reviews})
     
     # remove a few movies from the dataframe
@@ -141,3 +140,5 @@ def get_dramas():
     data = data.drop(movie3)
     
     return data
+
+my_dramas = get_dramas(titles, reviews)
