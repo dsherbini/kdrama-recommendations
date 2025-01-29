@@ -53,8 +53,7 @@ if selected_title != 'Select a k-drama':
 # add a footer to bottom of app page
 st.markdown("""
 <p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
-© 2025 Danya Sherbini | <a href='https://github.com/dsherbini' target="_blank">GitHub</a>
-</p>
+© 2025 Danya Sherbini</p>
 """, unsafe_allow_html=True)
 
 

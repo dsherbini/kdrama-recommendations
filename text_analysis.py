@@ -419,18 +419,9 @@ for new_column, word_list in feature_dict.items():
     get_feature(kdramas,'Reviews_Clean', new_column, word_list)
         
 # save updated data frame with features to csv
-#filepath = os.path.join(PATH,'data/kdrama_data_with_features.csv')
-#kdramas.to_csv(filepath,index=False,encoding='utf-8')
+output_dir = '/data'
+os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
+output_path = os.path.join(output_dir, 'kdrama_data_with_features.csv')
+kdramas.to_csv(output_path, index=False, encoding='utf-8')
+print(f"File saved successfully at {output_path}")
 
-
-############################# PREP DATA FOR RECOMMENDATIONS ##############################
-
-# drop review columns from the df
-kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
-
-# fill NaNs with the general polarity scores for all continuous feature columns
-kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
-
-# for features df, set index as title
-features = kdramas.copy()
-features.set_index('Title', inplace=True)
