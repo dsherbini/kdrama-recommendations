@@ -35,10 +35,13 @@ pg = st.navigation([welcome,recs],expanded=False)
 #)
 
 # Add a footer to the bottom-right corner of the app page
-st.markdown("""
-<p style="font-size: 0.8em; text-align: right; position: fixed; bottom: 0; right: 0; margin: 0.5em;">
-© 2025 Danya Sherbini</p>
-""", unsafe_allow_html=True)
+if 'footer_added' not in st.session_state:
+    st.markdown("""
+    <p style="font-size: 0.8em; text-align: right; position: fixed; bottom: 0; right: 0; margin: 0.5em;">
+    © 2025 Danya Sherbini</p>
+    """, unsafe_allow_html=True)
+    st.session_state['footer_added'] = True
+
 
 # Run the pages
 pg.run()
