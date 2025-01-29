@@ -1,4 +1,6 @@
 secrets.toml
+.streamlit/
+*.toml
 password.txt
 credentials.ini
 .DS_Store
