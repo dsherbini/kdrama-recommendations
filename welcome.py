@@ -12,8 +12,7 @@ import streamlit as st
 st.title('Find your next favorite k-drama.')
 
 # set subtitle for the app
-st.markdown('Looking for a new k-drama to watch? Look no further! Kdramarama is here to help.')
-st.markdown('Your next favorite k-drama awaits.')
+st.markdown('Looking for a new k-drama to watch? Look no further! Kdramarama is here to help. Your next favorite k-drama awaits.')
 st.markdown('')
 st.markdown('')
 st.markdown('')
