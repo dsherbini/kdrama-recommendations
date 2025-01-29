@@ -4,6 +4,8 @@ secrets.toml
 password.txt
 credentials.ini
 .DS_Store
+DS_Store
+/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
