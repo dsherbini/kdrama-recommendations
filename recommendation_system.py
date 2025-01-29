@@ -9,13 +9,15 @@ import os
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+from text_analysis import kdramas_with_features
 
 # set wd
-PATH = '/kdrama-recommendations'
-os.chdir(PATH)
+#PATH = '/kdrama-recommendations'
+#os.chdir(PATH)
 
 # load data
-kdramas = pd.read_csv(os.path.join(PATH, 'data','kdrama_data_with_features.csv'))
+#kdramas = pd.read_csv(os.path.join(PATH, 'data','kdrama_data_with_features.csv'))
+kdramas = kdramas_with_features
 
 ################################ DATA CLEANING ################################
 

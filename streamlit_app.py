@@ -10,12 +10,13 @@ from recommendation_system import kdramas, features, recommend_kdrama
 # page configuration
 st.set_page_config(
     page_title='K-Drama-Rama',
-    page_icon='sparkles',
+    page_icon='✨',
     layout='centered',
     initial_sidebar_state='auto',
     menu_items={
+        'Get help': None,
         'Report a bug': 'https://github.com/dsherbini/kdrama-recommendations/issues',
-        'About': "Hi, I'm Danya. I made K-Drama-Rama because I love to watch Korean dramas. The recommendations in this app are based on the dramas I've personally watched and my own analysis. For more information on how I generated these recommendations and how I built this app, feel free to check out my GitHub."
+        'About': "Hi, I'm Danya. I made K-Drama-Rama because I love to watch Korean dramas. The recommendations in this app are based on the dramas I've personally watched and my own analysis. For more information on how I generated these recommendations and how I built this app, feel free to check out my [GitHub](https://github.com/dsherbini/kdrama-recommendations)."
     }
 )
 # set title for the app
