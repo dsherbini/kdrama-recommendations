@@ -12,9 +12,19 @@ import streamlit as st
 st.title('Find your next K-drama')
 
 # set subtitle for the app
-st.markdown("<h5 style='text-align: left; '>Looking for a new k-drama to watch? Look no further! Select a k-drama that you have watched and enjoyed from the list below and get recommendations. <br> <br> Your next favorite k-drama awaits &hearts;<br><br></h5>", unsafe_allow_html=True)
+st.markdown("<h5 style='text-align: left; '>Looking for a new k-drama to watch? Look no further! Kdramarama is here to help. Your next favorite k-drama awaits &hearts;<br><br></h5>", unsafe_allow_html=True)
 
-st.page_link('recs.py',label='Find your next favorite k-drama.')
+col1, col2, col3 = st.columns([3,3,3])
+with col1:
+    st.markdown("")
+
+with col2:
+    # link to recs page
+    st.page_link('recs.py',label='Get recommendations.', use_container_width=True)
+
+with col3:
+    st.markdown("")
+    
 
 # add a footer to bottom of app page
 st.markdown("""
