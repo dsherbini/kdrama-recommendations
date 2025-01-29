@@ -9,21 +9,27 @@ Created Jan 28, 2025
 import streamlit as st
 
 # set title for the app
-st.title('Find your next K-drama')
+st.title('Find your next favorite k-drama.')
 
 # set subtitle for the app
-st.markdown('##### Looking for a new k-drama to watch? Look no further! Kdramarama is here to help. Your next favorite k-drama awaits.')
+st.markdown('##### Looking for a new k-drama to watch? Look no further! Kdramarama is here to help.')
+st.markdown('##### Your next favorite k-drama awaits.')
+st.markdown('')
+st.markdown('')
+st.markdown('')
 
-col1, col2, col3 = st.columns([3,3,3])
-with col1:
-    st.markdown("")
 
-with col2:
-    # link to recs page
-    st.page_link('recs.py',label='Get recommendations.', use_container_width=True)
-
-with col3:
-    st.markdown("")
+with st.container(height=5):
+    col1, col2, col3 = st.columns([3,3,3])
+    with col1:
+        st.markdown("")
+    
+    with col2:
+        # link to recs page
+        st.page_link('recs.py',label='Get recommendations.', use_container_width=True)
+    
+    with col3:
+        st.markdown("")
     
 
 # add a footer to bottom of app page
