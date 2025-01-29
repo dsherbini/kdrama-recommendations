@@ -418,19 +418,9 @@ feature_dict = {
 
 for new_column, word_list in feature_dict.items():
     get_feature(kdramas_clean_sentiment,'Reviews_Clean', new_column, word_list)
-    
 
-# save to csv
-from datetime import datetime
 
-# set output directory
-output_dir = '/data_new'
-os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
-    
-# Get current date in YYYY-MM-DD format
-date_str = datetime.now().strftime('%Y-%m-%d')
+# rename final data
+kdramas_final = kdramas_clean_sentiment
 
-# Create filename with date
-output_path = os.path.join(output_dir, f'kdramas_{date_str}.csv')
-kdramas_clean_sentiment.to_csv(output_path, index=False, encoding='utf-8')
-print(f"File saved successfully at {output_path} on {date_str}")
+

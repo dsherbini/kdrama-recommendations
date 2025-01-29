@@ -36,5 +36,5 @@ EXPOSE 8502
 # Add a healthcheck for the container
 HEALTHCHECK CMD curl --fail http://localhost:8502/_stcore/health
 
-# Set the command to run Streamlit
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8502", "--server.address=0.0.0.0"]
+# Run all commands sequentially in one line: generate drama data as csv, then run app
+CMD python utils/csv.py && streamlit run streamlit_app.py --server.port=8502 --server.address=0.0.0.0
