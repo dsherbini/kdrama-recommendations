@@ -10,7 +10,7 @@ import streamlit as st
 st.set_page_config(
     page_title='K-Drama-Rama',
     page_icon='✨',
-    layout='wide',
+    layout='centered',
     initial_sidebar_state='auto',
     menu_items={
         'Get help': None,
@@ -34,14 +34,11 @@ pg = st.navigation([welcome,recs],expanded=False)
 #    link="https://techequity.us"
 #)
 
-# Add a footer to the bottom-right corner of the app page
-if 'footer_added' not in st.session_state:
-    st.markdown("""
-    <p style="font-size: 0.8em; text-align: right; position: fixed; bottom: 0; right: 0; margin: 0.5em;">
-    © 2025 Danya Sherbini</p>
-    """, unsafe_allow_html=True)
-    st.session_state['footer_added'] = True
-
+# add a footer to bottom of app page
+st.markdown("""
+<p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
+© 2025 Danya Sherbini</p>
+""", unsafe_allow_html=True)
 
 # Run the pages
 pg.run()
