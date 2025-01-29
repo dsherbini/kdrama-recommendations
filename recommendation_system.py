@@ -4,12 +4,9 @@ Title: K-Drama Recommendation System
 Date: March 2023
 """
 
-# load packages
-import os
-import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from text_analysis import kdramas_with_features
+#from text_analysis import kdramas
 
 # set wd
 #PATH = '/kdrama-recommendations'
@@ -17,19 +14,19 @@ from text_analysis import kdramas_with_features
 
 # load data
 #kdramas = pd.read_csv(os.path.join(PATH, 'data','kdrama_data_with_features.csv'))
-kdramas = kdramas_with_features
+#kdramas = kdramas_with_features
 
 ################################ DATA CLEANING ################################
 
 # drop review columns from the df
-kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
+#kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
 
 # fill NaNs with the general polarity scores for all continuous feature columns
-kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
+#kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
 
 # for features df, set index as title
-features = kdramas.copy()
-features.set_index('Title', inplace=True)
+#features = kdramas.copy()
+#features.set_index('Title', inplace=True)
 
 
 ############################### RECOMMENDATIONS ###############################
