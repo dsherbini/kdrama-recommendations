@@ -11,10 +11,10 @@ import streamlit as st
 from recommendation_system import kdramas, features, recommend_kdrama
 
 # set title for the app
-st.title('Find your next K-drama')
+st.title('Get k-drama recommendations')
 
 # set subtitle for the app
-st.text('Select a k-drama that you have watched and enjoyed from the list below and get recommendations.')
+st.markdown('Select a k-drama that you have watched and enjoyed from the list below and get recommendations.')
 
 # get list of kdrama titles
 titles = list(kdramas['Title'].unique())
