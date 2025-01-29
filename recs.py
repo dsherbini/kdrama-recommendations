@@ -14,7 +14,7 @@ from recommendation_system import kdramas, features, recommend_kdrama
 st.title('Find your next K-drama')
 
 # set subtitle for the app
-st.markdown("<h5 style='text-align: left; '>Looking for a new k-drama to watch? Look no further! Select a k-drama that you have watched and enjoyed from the list below and get recommendations. <br> <br> Your next favorite k-drama awaits &hearts;<br><br></h5>", unsafe_allow_html=True)
+st.text('Select a k-drama that you have watched and enjoyed from the list below and get recommendations.')
 
 # get list of kdrama titles
 titles = list(kdramas['Title'].unique())

@@ -12,7 +12,7 @@ import streamlit as st
 st.title('Find your next K-drama')
 
 # set subtitle for the app
-st.markdown('#### Looking for a new k-drama to watch? Look no further! Kdramarama is here to help. Your next favorite k-drama awaits.')
+st.markdown('##### Looking for a new k-drama to watch? Look no further! Kdramarama is here to help. Your next favorite k-drama awaits.')
 
 col1, col2, col3 = st.columns([3,3,3])
 with col1:
