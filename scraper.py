@@ -138,9 +138,15 @@ def get_dramas(titles, links, reviews):
 my_data = get_dramas(titles, links, reviews)
 
 # Save as csv file
+
+# designate output directory
 output_dir = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations/data'
 os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
-output_path = os.path.join(output_dir,'scraped_data_2025.01.29.csv')
+
+# designate filepath
+output_path = os.path.join(output_dir,'scraped_data.csv')
+
+# save to csv
 my_data.to_csv(output_path, index=False, encoding='utf-8')
 print(f"File saved successfully at {output_path}")
 
