@@ -15,7 +15,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 ################################ LOAD DATA ################################
 
-def get_latest_file(data_folder='data'):
+def get_latest_file(data_folder='data_new'):
     '''
     Finds the most recent kdramas_YYYY-MM-DD.csv file in the data folder.
 

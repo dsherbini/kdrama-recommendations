@@ -424,7 +424,7 @@ for new_column, word_list in feature_dict.items():
 from datetime import datetime
 
 # set output directory
-output_dir = '/data'
+output_dir = '/data_new'
 os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
     
 # Get current date in YYYY-MM-DD format
