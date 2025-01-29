@@ -28,7 +28,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
 
 # import k-drama data
-from web_scraping import get_dramas
+from web_scraping2 import get_dramas
 kdramas = get_dramas()
 
 ############################### TEXT PROCESSING ###############################
