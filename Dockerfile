@@ -37,5 +37,5 @@ EXPOSE 8502
 HEALTHCHECK CMD curl --fail http://localhost:8502/_stcore/health
 
 # Run all commands sequentially in one line: generate drama data as csv, then run app
-CMD ["sh", "-c", "python utils/csv.py && streamlit run streamlit_app.py --server.port=8502 --server.address=0.0.0.0"]
+CMD ["sh", "-c", "python csv.py && streamlit run streamlit_app.py --server.port=8502 --server.address=0.0.0.0"]
 
