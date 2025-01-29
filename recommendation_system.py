@@ -11,7 +11,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 # set wd
-PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
+PATH = '/kdrama-recommendations'
 os.chdir(PATH)
 
 # load data

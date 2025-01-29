@@ -27,11 +27,6 @@ from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
 
-# set wd
-PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
-os.chdir(PATH)
-os.getcwd()
-
 # import k-drama data
 from web_scraping import get_dramas
 kdramas = get_dramas()

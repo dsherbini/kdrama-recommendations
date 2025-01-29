@@ -5,7 +5,6 @@ Date Created: January 2024
 Last Updated: Oct 2024
 """
 
-import os
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup

@@ -4,12 +4,7 @@ Title: Streamlit App
 Date: March 2023
 """
 
-import os
 import streamlit as st
-import sys
-
-PATH = '/Users/danya/Documents/GitHub/personal github/kdrama-recommendations'
-sys.path.append(PATH)
 from recommendation_system import kdramas, features, recommend_kdrama
 
 ########################### HEARTBEAT MECHANISM ###############################
