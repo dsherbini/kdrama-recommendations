@@ -16,6 +16,10 @@ import nltk
 nltk.download('punkt') # only need to run this once
 nltk.download('punkt_tab') # only need to run this once
 nltk.download('stopwords') # only need to run this once
+nltk.download('wordnet') # only need to run this once
+nltk.download('averaged_perceptron_tagger')
+nltk.download('vader_lexicon')
+nltk.download('omw-1.4')
 from textblob import TextBlob
 from nltk.corpus import wordnet
 import re # regular expressions
@@ -26,7 +30,6 @@ from sklearn.feature_extraction.text import CountVectorizer # for word counts
 from wordcloud import WordCloud # for creating word cloud
 from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
-
 
 # import k-drama data
 scraped_data = pd.read_csv('data/scraped_data.csv')
