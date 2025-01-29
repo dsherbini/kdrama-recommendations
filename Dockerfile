@@ -3,6 +3,9 @@
 # Set base image in Python
 FROM python:3.10-slim
 
+# Define app name
+LABEL app.name="Kdramarama"
+
 # Set working directory
 WORKDIR /kdrama-recommendations
 
