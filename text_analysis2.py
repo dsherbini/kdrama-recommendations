@@ -420,10 +420,9 @@ for new_column, word_list in feature_dict.items():
     get_feature(kdramas_clean_sentiment,'Reviews_Clean', new_column, word_list)
     
 
-
 def get_final_df():
     '''
-    Get final dataframe to be used in rest of app.
+    Rename final dataframe.
 
     '''
     # Rename df for easier reference in other scripts
@@ -432,6 +431,8 @@ def get_final_df():
     return kdramas_final
 
 
+# save data as csv
+from datetime import datetime
 def save_csv(df):
     '''
     Save kdrama data as csv file
@@ -439,8 +440,17 @@ def save_csv(df):
     '''        
     output_dir = '/data'
     os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
-    output_path = os.path.join(output_dir, 'kdramas.csv')
+    
+    # Get current date in YYYY-MM-DD format
+    date_str = datetime.now().strftime('%Y-%m-%d')
+
+    # Create filename with date
+    output_path = os.path.join(output_dir, f'kdramas_{date_str}.csv')
+
     df.to_csv(output_path, index=False, encoding='utf-8')
     
-    return print(f"File saved successfully at {output_path}")
+    return print(f"File saved successfully at {output_path} on {date_str}")
 
+
+kdramas_final = get_final_df()
+save_csv(kdramas_final)

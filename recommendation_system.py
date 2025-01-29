@@ -4,14 +4,43 @@ Title: K-Drama Recommendation System
 Date: March 2023
 """
 
+import os
+from datetime import datetime
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from text_analysis2 import get_final_df
 
 # load data
-kdramas = get_final_df()
 #kdramas = pd.read_csv('data/kdrama_data_with_features.csv')
+
+################################ LOAD DATA ################################
+
+def get_latest_file(data_folder='data'):
+    '''
+    Finds the most recent kdramas_YYYY-MM-DD.csv file in the data folder.
+
+    Parameters:
+    data_folder (str): Path to the folder containing the CSV files.
+
+    Returns:
+    str: Path to the most recent CSV file or None if no matching file is found.
+    '''
+    files = [f for f in os.listdir(data_folder) if f.startswith('kdramas_') and f.endswith('.csv')]
+    
+    if not files:
+        raise FileNotFoundError("No kdramas_YYYY-MM-DD.csv files found in the data folder.")
+
+    # Sort files by date extracted from filename (filename format: 'kdramas_YYYY-MM-DD.csv')
+    files.sort(key=lambda f: datetime.strptime(f.split('_')[1].split('.csv')[0], '%Y-%m-%d'), reverse=True)
+
+    return os.path.join(data_folder, files[0])
+
+# Get the most recent file
+latest_file = get_latest_file()
+
+# Load the most recent file
+kdramas = pd.read_csv(latest_file)
+print(f"Loaded file: {latest_file}")
 
 ################################ DATA CLEANING ################################
 
