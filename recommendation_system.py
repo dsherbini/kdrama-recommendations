@@ -15,28 +15,20 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 ################################ LOAD DATA ################################
 
-def get_latest_file(data_folder='data_new'):
-    '''
-    Finds the most recent kdramas_YYYY-MM-DD.csv file in the data folder.
+#def get_latest_file(data_folder='data_new'):
 
-    Parameters:
-    data_folder (str): Path to the folder containing the CSV files.
-
-    Returns:
-    str: Path to the most recent CSV file or None if no matching file is found.
-    '''
-    files = [f for f in os.listdir(data_folder) if f.startswith('kdramas_') and f.endswith('.csv')]
+ #  files = [f for f in os.listdir(data_folder) if f.startswith('kdramas_') and f.endswith('.csv')]
     
-    if not files:
-        raise FileNotFoundError("No kdramas_YYYY-MM-DD.csv files found in the data folder.")
-
+  #  if not files:
+ #       raise FileNotFoundError("No kdramas_YYYY-MM-DD.csv files found in the data folder.")
+#
     # Sort files by date extracted from filename (filename format: 'kdramas_YYYY-MM-DD.csv')
-    files.sort(key=lambda f: datetime.strptime(f.split('_')[1].split('.csv')[0], '%Y-%m-%d'), reverse=True)
+ #   files.sort(key=lambda f: datetime.strptime(f.split('_')[1].split('.csv')[0], '%Y-%m-%d'), reverse=True)
 
-    return os.path.join(data_folder, files[0])
+ #   return os.path.join(data_folder, files[0])
 
 # Get the most recent file
-latest_file = get_latest_file()
+#latest_file = get_latest_file()
 
 # Load the most recent file
 #kdramas = pd.read_csv(latest_file)
