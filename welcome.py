@@ -19,17 +19,18 @@ st.markdown('')
 st.markdown('')
 
 
-with st.container(height=5):
-    col1, col2, col3 = st.columns([3,3,3])
-    with col1:
-        st.markdown("")
-    
-    with col2:
-        # link to recs page
+
+col1, col2, col3 = st.columns([3,3,3])
+with col1:
+    st.markdown("")
+
+with col2:
+    # link to recs page
+    with st.container():
         st.page_link('recs.py',label='Get recommendations.', use_container_width=True)
-    
-    with col3:
-        st.markdown("")
+
+with col3:
+    st.markdown("")
     
 
 # add a footer to bottom of app page
