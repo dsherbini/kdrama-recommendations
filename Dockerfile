@@ -27,7 +27,7 @@ RUN pip3 install -r requirements.txt
 # Download necessary NLTK and TextBlob corpora
 RUN python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); \
     nltk.download('wordnet'); nltk.download('averaged_perceptron_tagger'); \
-    nltk.download('vader_lexicon'); nltk.download('omw-1.4')"
+    nltk.download('vader_lexicon'); nltk.download('omw-1.4'); nltk.download('punkt_tab')"
 
 RUN python -c "import textblob.download_corpora; textblob.download_corpora.download_all()"
 
