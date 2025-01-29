@@ -24,6 +24,9 @@ COPY requirements.txt .
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
+# Create a persistent directory for data
+RUN mkdir -p /kdrama-recommendations/data
+
 # Copy the rest of the application code into the container
 COPY . .
 
