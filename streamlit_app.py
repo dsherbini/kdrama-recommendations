@@ -7,39 +7,6 @@ Date: March 2023
 import streamlit as st
 from recommendation_system import kdramas, features, recommend_kdrama
 
-########################### HEARTBEAT MECHANISM ###############################
-
-# implement a heartbeat mechanism to routinely send a signal to the app to keep it awake
-
-import requests
-
-def send_heartbeat():
-    try:
-        response = requests.get('https://kdrama.streamlit.app')
-        print(f"Heartbeat sent. Response status code: {response.status_code}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error sending heartbeat: {e}")
-
-# create background thread that calls the heartbeat function
-import threading
-import time
-
-def start_heartbeat_thread(interval_seconds):
-    def heartbeat_thread():
-        while True:
-            send_heartbeat()
-            time.sleep(interval_seconds)
-
-    # start the thread
-    thread = threading.Thread(target=heartbeat_thread)
-    thread.daemon = True # set as daemon = True so it will exit when the main program exits
-    thread.start()
-
-# start the heartbeat thread every 5 minutes
-start_heartbeat_thread(interval_seconds=300) 
-
-##################################### APP #####################################
-
 # page configuration
 st.set_page_config(
     page_title='K-Drama-Rama',
@@ -85,7 +52,7 @@ if selected_title != 'Select a k-drama':
 # add a footer to bottom of app page
 st.markdown("""
 <p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
-© 2024 Danya Sherbini | <a href='https://github.com/dsherbini' target="_blank">GitHub</a>
+© 2025 Danya Sherbini | <a href='https://github.com/dsherbini' target="_blank">GitHub</a>
 </p>
 """, unsafe_allow_html=True)
 
