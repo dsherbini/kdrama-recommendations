@@ -14,11 +14,12 @@ import matplotlib.pyplot as plt
 import spacy
 import nltk
 nltk.download('punkt') # only need to run this once
+nltk.download('punkt_tab') # only need to run this once
+nltk.download('stopwords') # only need to run this once
 from textblob import TextBlob
 from nltk.corpus import wordnet
 import re # regular expressions
 from nltk.corpus import stopwords # stop words
-nltk.download('stopwords') # only need to run this once
 from nltk.tokenize import word_tokenize # for word tokenization
 from nltk.stem import WordNetLemmatizer # for stemming words
 from sklearn.feature_extraction.text import CountVectorizer # for word counts
