@@ -136,6 +136,8 @@ def get_dramas():
     movie1 = data[data['Title'] == '20th Century Girl'].index
     movie2 = data[data['Title'] == 'Love and Leashes'].index
     movie3 = data[data['Title'] == 'Tune in for Love'].index
-    data = data.drop([movie1,movie2,movie3])
+    data = data.drop(movie1)
+    data = data.drop(movie2)
+    data = data.drop(movie3)
     
     return data
