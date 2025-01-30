@@ -214,7 +214,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # load Google's pre-trained Word2Vec model
 # download google news vectors here: https://www.kaggle.com/datasets/leadbest/googlenewsvectorsnegative300?resource=download
-model = KeyedVectors.load_word2vec_format('/Users/danyasherbini/Documents/GitHub/kdrama-recommendations/utils/GoogleNews-vectors-negative300.bin', binary=True, limit=500000)
+model = KeyedVectors.load_word2vec_format('kdrama-recommendations/utils/GoogleNews-vectors-negative300.bin', binary=True, limit=500000)
 
 # remove underscore from phrases/split into individual words
 phrases = noun_phrases_list_connected
