@@ -26,7 +26,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 
 
 # import k-drama data
-scraped_data = pd.read_csv('../data/scraped_data.csv')
+scraped_data = pd.read_csv('./data/scraped_data.csv')
 
 ############################### TEXT PROCESSING ###############################
 
