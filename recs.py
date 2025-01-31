@@ -7,6 +7,7 @@ Updated Jan 28, 2025
 @author: danyasherbini
 """
 
+
 import pandas as pd
 import streamlit as st
 from utils.recommendation_system import recommend_kdrama
@@ -14,19 +15,19 @@ from utils.recommendation_system import recommend_kdrama
 
 ####################################### DATA ######################################
 
-# load data
+# Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('/Users/danyasherbini/Documents/GitHub/kdrama-recommendations/utils/data/kdrama_data_with_features.csv')
+    df = pd.read_csv('data/kdrama_data_with_features.csv')
     return df
 
 kdramas_final = load_data()
 
-
-# data cleaning
+# Data cleaning
 def process_features(df):
     # drop review columns from the df
-    df = df.drop(['Link','Review','Reviews_Clean'],axis = 1)
+    cols_to_drop = ['Review','Link','Image','Score','Synopsis','Reviews_Clean']
+    df = df.drop(cols_to_drop,axis = 1)
 
     # fill NaNs with the general polarity scores for all continuous feature columns
     df = df.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
@@ -38,8 +39,6 @@ def process_features(df):
     return features
 
 features = process_features(kdramas_final)
-
-
 
 ###################################### CSS #######################################
 
@@ -63,8 +62,6 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-
-
 ################################### PAGE SET UP ###################################
 # set title for the app
 st.title('Get k-drama recommendations')
@@ -82,10 +79,11 @@ titles.insert(0, 'Select a k-drama')
 default_selected_index = 0 
 
 # create a dropdown menu for title
-selected_title = st.selectbox('Select a k-drama from the list below:', titles, index=default_selected_index)
+selected_title = st.selectbox('Get recommendations for:', titles, index=default_selected_index)
 
 # create a drop down menu for number of recommendations
-n_recommendations = range(1,11)
+n_recommendations = list(range(1,6))
+n_recommendations.insert(0, 'Select number of recommendations') # add a default option to the n_recs list
 selected_n = st.selectbox('How many recommendations do you want?', n_recommendations)
 
 # get recommendations for selected title
@@ -95,13 +93,30 @@ if selected_title != 'Select a k-drama':
     # display the selected title and its recommendations
     st.write("Recommended K-dramas:")
     for r in recommendations:
-        # Get the corresponding link for each recommendation
-        link = kdramas_final[kdramas_final['Title'] == r]['Link'].values
-        if link:  # Check if the link exists
-            st.markdown(f' - [{r}]({link[0]})')  # Display title as a clickable link
-        else:
-            st.write(f' - {r}')  # Display title without link if no link exists
+        # Show details for each recommendation
+        rec_data = kdramas_final[kdramas_final['Title'] == r]
+        if not rec_data.empty:
+            link = rec_data['Link'].values[0] if 'Link' in rec_data else None
+            image = rec_data['Image'].values[0] if 'Image' in rec_data else None
+            score = rec_data['Score'].values[0] if 'Score' in rec_data else "N/A"
+            synopsis = rec_data['Synopsis'].values[0] if 'Synopsis' in rec_data else "Synopsis not available."
 
+            # Display title as an expander
+            with st.expander(f"**{r}**"):
+                if image:
+                    st.image(image, width=100)  # Show image
+                if link:
+                    st.markdown(f"[📺 Get more details]({link})")  # Show link
+                st.write(f"**⭐ MyDramaList Rating:** {score}")
+                st.write(f"**📖 Synopsis:** {synopsis}")
+        #else:
+            #st.write(f" - {r}")  # If no data found, just display title
+
+# optional -- do something if they don't select both title and n_recommendations        
+#elif selected_title == 'Select a k-drama':
+#    st.write('')
+#    st.write('')
+#    st.write('Please select a k-drama from the list above to get recommendations.')
     
     
 
