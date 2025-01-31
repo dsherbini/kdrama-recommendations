@@ -10,44 +10,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
-# load data
-#kdramas = pd.read_csv('data/kdrama_data_with_features.csv')
 
-################################ LOAD DATA ################################
-
-#def get_latest_file(data_folder='data_new'):
-
- #  files = [f for f in os.listdir(data_folder) if f.startswith('kdramas_') and f.endswith('.csv')]
-    
-  #  if not files:
- #       raise FileNotFoundError("No kdramas_YYYY-MM-DD.csv files found in the data folder.")
-#
-    # Sort files by date extracted from filename (filename format: 'kdramas_YYYY-MM-DD.csv')
- #   files.sort(key=lambda f: datetime.strptime(f.split('_')[1].split('.csv')[0], '%Y-%m-%d'), reverse=True)
-
- #   return os.path.join(data_folder, files[0])
-
-# Get the most recent file
-#latest_file = get_latest_file()
-
-# Load the most recent file
-#kdramas = pd.read_csv(latest_file)
-#print(f"Loaded file: {latest_file}")
-
-################################ DATA CLEANING ################################
-
-# drop review columns from the df
-#kdramas = kdramas.drop(['Review','Reviews_Clean'],axis = 1)
-
-# fill NaNs with the general polarity scores for all continuous feature columns
-#kdramas = kdramas.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
-
-# for features df, set index as title
-#features = kdramas.copy()
-#features.set_index('Title', inplace=True)
-
-
-############################### RECOMMENDATIONS ###############################
 
 def recommend_kdrama(selected_title, features, n=5):
     '''

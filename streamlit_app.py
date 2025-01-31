@@ -9,7 +9,7 @@ import streamlit as st
 # page configuration
 st.set_page_config(
     page_title='K-Drama-Rama',
-    page_icon='✨',
+    page_icon='✨🍉',
     layout='centered',
     initial_sidebar_state='auto',
     menu_items={
@@ -19,9 +19,10 @@ st.set_page_config(
     }
 )
 
+
 # Pages
-welcome = st.Page('welcome.py',title='Welcome',icon='✨')
-recs = st.Page('recs.py', title='Recommendations', icon='✨')
+welcome = st.Page('welcome.py',title='Home')
+recs = st.Page('recs.py', title='Recommendations')
 
 # Build navigation bar
 pg = st.navigation([welcome,recs],expanded=False)
