@@ -7,10 +7,37 @@ Updated Jan 28, 2025
 @author: danyasherbini
 """
 
+import pandas as pd
 import streamlit as st
 from utils.recommendation_system import recommend_kdrama
-from utils.text_analysis import kdramas_final, features
 
+# load data
+@st.cache_data
+def load_data():
+    df = pd.read_csv('/Users/danyasherbini/Documents/GitHub/kdrama-recommendations/utils/data/kdrama_data_with_features.csv')
+    return df
+
+kdramas_final = load_data()
+
+
+# data cleaning
+def process_features(df):
+    # drop review columns from the df
+    df = df.drop(['Link','Review','Reviews_Clean'],axis = 1)
+
+    # fill NaNs with the general polarity scores for all continuous feature columns
+    df = df.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
+
+    # for features df, set index as title
+    features = df.copy()
+    features.set_index('Title', inplace=True)
+    
+    return features
+
+features = process_features(kdramas_final)
+
+
+##### Page set up
 # set title for the app
 st.title('Get k-drama recommendations')
 

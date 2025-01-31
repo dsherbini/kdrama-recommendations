@@ -3,7 +3,7 @@ Title: Text Analysis & Feature Extraction - v2
 @author: dsherbini
 Date: January 2025
 """
-
+#%%
 # basic packages
 import os
 import pandas as pd
@@ -23,13 +23,16 @@ from sklearn.feature_extraction.text import CountVectorizer # for word counts
 from wordcloud import WordCloud # for creating word cloud
 from nltk import ngrams # for extracting phrases
 from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
+#%%
 
-
+#%%
 # import k-drama data
-scraped_data = pd.read_csv('./data/scraped_data.csv')
+# designate output directory
+scraped_data = pd.read_csv('./utils/data/scraped_data.csv')
+#%%
 
 ############################### TEXT PROCESSING ###############################
-
+#%%
 # first we need to clean the review text in order to analyze it further
 
 # clean all text
@@ -92,9 +95,10 @@ def clean_reviews(kdramas):
 
 # get clean reviews
 kdramas, reviews_clean = clean_reviews(scraped_data)
+#%%
 
 ################################# WORD COUNTS #################################
-
+#%%
 # start with basic text analysis: counting the freqency of individual words
 
 # count common words
@@ -145,9 +149,10 @@ plt.figure(figsize=(10, 5))
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis('off')
 plt.show()
+#%%
 
 ################################ PHRASE COUNTS ################################
-
+#%%
 # now we'll extract and count common phrases instead of words
 
 # get list of noun phrases using TextBlob
@@ -214,7 +219,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # load Google's pre-trained Word2Vec model
 # download google news vectors here: https://www.kaggle.com/datasets/leadbest/googlenewsvectorsnegative300?resource=download
-#model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True, limit=500000)
+model = KeyedVectors.load_word2vec_format('/Users/danyasherbini/Documents/GoogleNews-vectors-negative300.bin', binary=True, limit=500000)
 
 # remove underscore from phrases/split into individual words
 phrases = noun_phrases_list_connected
@@ -288,11 +293,11 @@ def get_similar_phrases(phrases, similarity_min, similarity_max):
 
 # get similar phrases
 # note: this takes 1-2 minutes to run
-#similar_phrases = get_similar_phrases(phrases, .8, .95)
-
+similar_phrases = get_similar_phrases(phrases, .8, .95)
+#%%
 
 ############################# SENTIMENT ANALYSIS ##############################
-
+#%%
 # now we'll conduct sentiment analyses -- both general and for certain phrases
 
 # general sentiment analysis of each review
@@ -364,15 +369,15 @@ def sentiment_around_phrase(sentence, phrase):
 # get sentiment for a list of phrases, for all reviews
 target_phrases = ['female lead', 'FL', 'second female lead', 'male lead', 'ML', 'second male lead',
                   'cast', 'main leads', 'ensemble cast', 'couple', 'side couples', 'plot', 'story', 
-                  'beginning', 'ending', 'romance', 'acting']
+                  'beginning', 'ending', 'romance', 'acting', 'kiss']
 
 # add sentiment scores as features in the data frame
 for phrase in target_phrases:
     kdramas[f'sentiment_{phrase}'] = kdramas['Review'].apply(lambda x: sentiment_around_phrase(x, phrase))
-
+#%%
 
 ############################# FEATURE EXTRACTION ##############################
-
+#%%
 # now we will create some features in out data set based on most common words 
 # and phrases found in the previous analyses
 
@@ -406,7 +411,7 @@ def get_feature(df, text_column, new_column, word_list):
     return df
 
 
-def process_kdrama_features(df, text_column='Reviews_Clean'):
+def process_kdrama_features(df, text_column='Reviews'):
     '''
     Processes the k-drama dataset to add binary features based on the reviews column 
     using a pre-defined word list.
@@ -414,7 +419,7 @@ def process_kdrama_features(df, text_column='Reviews_Clean'):
     Parameters
     ----------
     df: data frame of interest
-    text_column: column in df containing text to scan (string, default 'Reviews_Clean')
+    text_column: column in df containing text to scan (string, default 'Reviews')
 
     Returns
     -------
@@ -422,15 +427,20 @@ def process_kdrama_features(df, text_column='Reviews_Clean'):
     '''
     # Define the target word lists for feature creation
     feature_dict = {
-        'romance': ['romance', 'chemistry', 'cute', 'swoon'],
-        'kiss': ['kiss'],
-        'comedy': ['comedy', 'comedic', 'funny', 'hilarious', 'laugh', 'laughed'],
-        'melodrama': ['melodrama', 'melodramatic'],
-        'wholesome': ['wholesome', 'sweet'],
-        'sad': ['sad', 'tear', 'tears', 'cry', 'bawl', 'bawling', 'tragic', 'heavy', 'suicide'],
+        'romance': ['romance', 'chemistry', 'cute', 'swoon','romantic'],
+        'kiss': ['kiss', 'kissing', 'kissed', 'makeout', 'make out'],
+        'steamy': ['steamy', 'sexy', 'hot', 'steamy scenes', 'steamy scene'],
+        'comedy': ['comedy', 'comedic', 'funny', 'hilarious', 'laugh','laughed','laughing'],
+        'melodrama': ['drama', 'dramatic','melo','melodrama','melodramatic'],
+        'wholesome': ['wholesome', 'sweet','healing','heartwarming'],
+        'sad': ['sad', 'tear', 'tears', 'cry', 'bawl', 'bawling', 'tragic', 'heavy', 'suicide','cried'],
         'slow burn': ['slow', 'burn', 'boring'],
-        'tropey': ['trope', 'tropes', 'sterotype', 'miscommunication'],
-        'action': ['action','intense','murder','villain','suspense', 'suspenseful']
+        'tropey': ['trope', 'tropes', 'tropey','sterotype', 'miscommunication'],
+        'action': ['action','intense','murder','villain','suspense', 'suspenseful'],
+        'OST': ['OST','soundtrack','music','song','listen','listening'],
+        'bingeworthy': ['binge','bingeworthy','obsessed'],
+        'top': ['best','top','top five','top ten','top 5','top 10','favorite','recommend'],
+        'bad': ['bad','terrible','horrible','worst','awful']
     }
     
     # Add features based on the word lists in feature_dict
@@ -440,23 +450,18 @@ def process_kdrama_features(df, text_column='Reviews_Clean'):
     return df
 
 # Process the DataFrame and add the new features
-kdramas_final = process_kdrama_features(kdramas)
-
-# Process final kdramas df to get features
-
-def process_features(df):
-    # drop review columns from the df
-    df = df.drop(['Review','Reviews_Clean'],axis = 1)
-
-    # fill NaNs with the general polarity scores for all continuous feature columns
-    df = df.apply(lambda row: row.fillna(row['Polarity_Score']), axis=1)
-
-    # for features df, set index as title
-    features = df.copy()
-    features.set_index('Title', inplace=True)
-    
-    return features
-
-features = process_features(kdramas_final)
+kdramas_final = process_kdrama_features(kdramas,text_column='Review')
 
 
+#save as csv
+# designate output directory
+output_dir = './data'
+os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
+
+# designate filepath
+output_path = os.path.join(output_dir,'kdrama_data_with_features.csv')
+
+# save to csv
+kdramas_final.to_csv(output_path, index=False, encoding='utf-8')
+print(f"File saved successfully at {output_path}")
+#%%
