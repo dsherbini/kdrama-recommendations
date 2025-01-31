@@ -11,6 +11,9 @@ import pandas as pd
 import streamlit as st
 from utils.recommendation_system import recommend_kdrama
 
+
+####################################### DATA ######################################
+
 # load data
 @st.cache_data
 def load_data():
@@ -37,7 +40,32 @@ def process_features(df):
 features = process_features(kdramas_final)
 
 
-##### Page set up
+
+###################################### CSS #######################################
+
+# Custom CSS to change the colors of hyperlinks
+
+# Match colors from config.toml
+text_color = '#074799' # text color in config.toml
+hover_color = '#7BD3EA' # primary color in config.toml
+
+st.markdown(f"""
+    <style>
+        /* Make the links use the primary color with !important */
+        a {{
+            color: {text_color} !important;  /* Primary color from config.toml */
+            text-decoration: none !important;  /* Remove underline */
+        }}
+        a:hover {{
+            color: {hover_color} !important;  /* Hover color from config.toml */
+        }}
+    </style>
+""", unsafe_allow_html=True)
+
+
+
+
+################################### PAGE SET UP ###################################
 # set title for the app
 st.title('Get k-drama recommendations')
 
@@ -67,7 +95,15 @@ if selected_title != 'Select a k-drama':
     # display the selected title and its recommendations
     st.write("Recommended K-dramas:")
     for r in recommendations:
-        st.write(f' - {r}')
+        # Get the corresponding link for each recommendation
+        link = kdramas_final[kdramas_final['Title'] == r]['Link'].values
+        if link:  # Check if the link exists
+            st.markdown(f' - [{r}]({link[0]})')  # Display title as a clickable link
+        else:
+            st.write(f' - {r}')  # Display title without link if no link exists
+
+    
+    
 
 # add a footer to bottom of app page
 st.markdown("""
