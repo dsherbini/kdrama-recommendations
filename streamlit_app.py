@@ -10,8 +10,8 @@ import streamlit as st
 st.set_page_config(
     page_title='K-Drama-Rama',
     page_icon='✨🍉',
-    layout='centered',
-    initial_sidebar_state='auto',
+    layout='wide',
+    initial_sidebar_state='collapsed',
     menu_items={
         'Get help': None,
         'Report a bug': 'https://github.com/dsherbini/kdrama-recommendations/issues',
@@ -37,10 +37,18 @@ pg = st.navigation([welcome,recs],expanded=False)
 
 # add a footer to bottom of app page
 st.markdown("""
-<p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
-© 2025 Danya Sherbini</p>
+    <style>
+        .footer {
+            font-size: 0.8em;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 2px 15px;
+            border-radius: 5px;
+        }
+    </style>
+    <p class="footer">© 2025 Danya Sherbini</p>
 """, unsafe_allow_html=True)
-
 # Run the pages
 pg.run()
 

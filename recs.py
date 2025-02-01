@@ -64,64 +64,100 @@ st.markdown(f"""
 
 ################################### PAGE SET UP ###################################
 # set title for the app
-st.title('Get k-drama recommendations')
+st.markdown("<h1 style='text-align: center;'>Get k-drama recommendations.</h1>", unsafe_allow_html=True)
+st.markdown('')
+st.markdown('')
 
 # set subtitle for the app
-st.markdown('Select a k-drama that you have watched and enjoyed from the list below and get recommendations.')
+with st.container():
+    col1,col2,col3 = st.columns([2,5,2])
+    
+    with col1:
+        st.markdown('')
+    
+    with col2:
+        st.markdown("<p style='text-align: center;'>Select a k-drama that you have watched and enjoyed from the list below and get recommendations.</p>", unsafe_allow_html=True)
+
+    with col3: 
+        st.markdown('')
+        st.markdown('')  
 
 # get list of kdrama titles
 titles = list(kdramas_final['Title'].unique())
 
-# add a default option to the title list
-titles.insert(0, 'Select a k-drama')
+# Create a layout with three columns (side-empty, centered, side-empty)
+with st.container():
+    col1, col2, col3 = st.columns([1, 2.5, 1])  
+    with col1:
+        st.empty()
 
-# set default option as first item in titles list
-default_selected_index = 0 
+    with col2:  # Center column
+        # create a dropdown menu for title
+        selected_title = st.selectbox('', titles,index=None,placeholder='Select a k-drama')
 
-# create a dropdown menu for title
-selected_title = st.selectbox('Get recommendations for:', titles, index=default_selected_index)
+        # create a drop down menu for number of recommendations
+        n_recommendations = range(1,6)
+        selected_n = st.selectbox('', n_recommendations,index=None,placeholder='Select number of recommendations')
 
-# create a drop down menu for number of recommendations
-n_recommendations = list(range(1,6))
-n_recommendations.insert(0, 'Select number of recommendations') # add a default option to the n_recs list
-selected_n = st.selectbox('How many recommendations do you want?', n_recommendations)
+    with col3:
+        st.empty()
 
-# get recommendations for selected title
-if selected_title != 'Select a k-drama':
-    recommendations = recommend_kdrama(selected_title, features, n=selected_n)
+st.markdown('')
+st.markdown('')
+st.markdown('')
 
-    # display the selected title and its recommendations
-    st.write("Recommended K-dramas:")
-    for r in recommendations:
-        # Show details for each recommendation
-        rec_data = kdramas_final[kdramas_final['Title'] == r]
-        if not rec_data.empty:
-            link = rec_data['Link'].values[0] if 'Link' in rec_data else None
-            image = rec_data['Image'].values[0] if 'Image' in rec_data else None
-            score = rec_data['Score'].values[0] if 'Score' in rec_data else "N/A"
-            synopsis = rec_data['Synopsis'].values[0] if 'Synopsis' in rec_data else "Synopsis not available."
 
-            # Display title as an expander
-            with st.expander(f"**{r}**"):
-                if image:
-                    st.image(image, width=100)  # Show image
-                if link:
-                    st.markdown(f"[📺 Get more details]({link})")  # Show link
-                st.write(f"**⭐ MyDramaList Rating:** {score}")
-                st.write(f"**📖 Synopsis:** {synopsis}")
-        #else:
-            #st.write(f" - {r}")  # If no data found, just display title
+with st.container():
+    col1,col2,col3 = st.columns([1,2.5,1])
+    
+    with col1:
+        st.empty()
+    
+    with col2:
+        # get recommendations for selected title
+        if selected_title != None and selected_n != None:
+            recommendations = recommend_kdrama(selected_title, features, n=selected_n)
 
-# optional -- do something if they don't select both title and n_recommendations        
-#elif selected_title == 'Select a k-drama':
-#    st.write('')
-#    st.write('')
-#    st.write('Please select a k-drama from the list above to get recommendations.')
+            # display the selected title and its recommendations
+            st.markdown("#### Recommended k-dramas:")
+            for r in recommendations:
+                # Show details for each recommendation
+                rec_data = kdramas_final[kdramas_final['Title'] == r]
+                if not rec_data.empty:
+                    link = rec_data['Link'].values[0] if 'Link' in rec_data else None
+                    image = rec_data['Image'].values[0] if 'Image' in rec_data else None
+                    score = rec_data['Score'].values[0] if 'Score' in rec_data else "N/A"
+                    synopsis = rec_data['Synopsis'].values[0] if 'Synopsis' in rec_data else "Synopsis not available."
+
+                    # Display title as an expander
+                    with st.expander(f"**{r}**"):
+                        with st.container():
+                            col1,col2 = st.columns([2,10]) 
+                            with col1:
+                                if image:
+                                    st.image(image, width=100)  # Show image
+                            with col2:
+                                st.markdown('')
+                                st.markdown('')
+                                st.markdown('')
+                                st.markdown('')
+                                st.markdown('')
+                                st.markdown(f"**📺 [Get more details]({link})**")
+                                st.write(f"**⭐ MyDramaList Rating:** {score}")
+                        st.write(f"**📖 Synopsis:** {synopsis}")
+                #else:
+                    #st.write(f" - {r}")  # If no data found, just display title
+
+        # optional -- do something if they don't select both title and n_recommendations        
+        #elif selected_title == 'Select a k-drama':
+        #    st.write('')
+        #    st.write('')
+        #    st.write('Please select a k-drama from the list above to get recommendations.')
     
     
+    with col3:
+        st.empty()
 
-# add a footer to bottom of app page
-st.markdown("""
-<p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
-© 2025 Danya Sherbini</p>
-""", unsafe_allow_html=True)
+    
+
+
