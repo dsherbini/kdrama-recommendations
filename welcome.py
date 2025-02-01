@@ -8,44 +8,43 @@ Created Jan 28, 2025
 
 import streamlit as st
 
-# set title for the app
-st.title('Find your next favorite k-drama.')
-
+# Set title for the app
+st.markdown("<h1 style='text-align: center;'>Find your next favorite k-drama.</h1>", unsafe_allow_html=True)
 st.markdown('')
 st.markdown('')
 
-# set subtitle for the app
+# Set subtitle for the app
 with st.container():
-    st.markdown("""
-                     <div style="text-align: center;">
-                    Looking for a new k-drama to watch? Look no further! </br>
-                    K-drama-rama is here to help. Your next favorite k-drama awaits.
-                     </div>
-                    """, unsafe_allow_html=True)
-
-
-st.markdown('')
-st.markdown('')
-st.markdown('')
-
-# set up containers
-with st.container():
-    col1, col2, col3 = st.columns([2,2,2])
+    col1,col2,col3 = st.columns([1,1,1])
+    
     with col1:
-        st.markdown("")
+        st.markdown('')
     
     with col2:
-        # button linking to the recommendations page
-        if st.button('Get Recommendations',type='primary'):
-            st.switch_page('recs.py')
-    
-    with col3:
-        st.markdown("")
-    
+        st.markdown("<p style='text-align: center;'>Looking for a new k-drama to watch? Look no further! K-drama-rama is here to help. Your next favorite k-drama awaits.</p>", unsafe_allow_html=True)
 
-# add a footer to bottom of app page
-st.markdown("""
-<p style="font-size: 0.8em; text-align: center; position: fixed; bottom: 0; width: 100%;">
-© 2025 Danya Sherbini</p>
-""", unsafe_allow_html=True)
+    with col3: 
+        st.markdown('')
+        st.markdown('')  
+
+st.markdown('')
+st.markdown('') 
+
+# Center the button using custom HTML & CSS
+st.markdown(
+    """
+    <style>
+    .stButton > button {
+        display: block;
+        margin: auto;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+# Button that links to the recommendations page
+if st.button('Get recommendations!', type='primary'):
+    st.switch_page('recs.py')
+
+
 
