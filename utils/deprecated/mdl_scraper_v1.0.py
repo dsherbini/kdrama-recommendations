@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-My Drama List Scraper v2.0
+My Drama List: Review Scraper v1.0
 Created on Wed Jan 29, 2025
 @author: danyasherbini
+
+This script scrapes my kdrama info from mydramalist.com.
 """
 import os
 import pandas as pd
@@ -55,7 +57,7 @@ if "signin" in driver.current_url.lower():
 else:
     print("Login successful!")
 
-    # Navigate to a page with dramas (e.g., the homepage or a search result page)
+    # Navigate to a page with drama reviews (e.g., the homepage or a search result page)
     driver.get("https://mydramalist.com/dramalist/Mystic_pub/completed?notes=1")
     time.sleep(160)  # Wait for JavaScript to load
 

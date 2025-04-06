@@ -18,7 +18,7 @@ from utils.recommendation_system import recommend_kdrama
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('data/kdrama_data_with_features.csv')
+    df = pd.read_csv('utils/data/kdrama_data_with_features.csv')
     return df
 
 kdramas_final = load_data()
@@ -26,7 +26,7 @@ kdramas_final = load_data()
 # Data cleaning
 def process_features(df):
     # drop review columns from the df
-    cols_to_drop = ['Review','Link','Image','Score','Synopsis','Reviews_Clean']
+    cols_to_drop = ['Review','Link','Image','Score','Synopsis','Reviews_Clean', 'Korean Title', 'Translated Title','Year','Rating','Genres']
     df = df.drop(cols_to_drop,axis = 1)
 
     # fill NaNs with the general polarity scores for all continuous feature columns
@@ -124,27 +124,41 @@ with st.container():
                 # Show details for each recommendation
                 rec_data = kdramas_final[kdramas_final['Title'] == r]
                 if not rec_data.empty:
+                    korean_title = rec_data['Korean Title'].values[0] if 'Korean Title' in rec_data else None
+                    translated_title = rec_data['Translated Title'].values[0] if rec_data['Translated Title'].values[0] != rec_data['Title'].values[0] else None
                     link = rec_data['Link'].values[0] if 'Link' in rec_data else None
                     image = rec_data['Image'].values[0] if 'Image' in rec_data else None
-                    score = rec_data['Score'].values[0] if 'Score' in rec_data else "N/A"
-                    synopsis = rec_data['Synopsis'].values[0] if 'Synopsis' in rec_data else "Synopsis not available."
+                    #score = rec_data['Score'].values[0] if 'Score' in rec_data else None
+                    rating = rec_data['Rating'].values[0] if 'Rating' in rec_data else None
+                    synopsis = rec_data['Synopsis'].values[0] if 'Synopsis' in rec_data else None
+                    genres = rec_data['Genres'].values[0] if 'Genres' in rec_data else None
 
                     # Display title as an expander
                     with st.expander(f"**{r}**"):
                         with st.container():
-                            col1,col2 = st.columns([2,10]) 
+                            col1,col2 = st.columns([3,10]) 
                             with col1:
                                 if image:
                                     st.image(image, width=100)  # Show image
                             with col2:
+                                if korean_title is not None:
+                                    st.markdown(f"**🇰🇷 Original Korean Title:** {korean_title}") 
+                                
+                                if translated_title is not None:
+                                    st.markdown(f"**🔄 Translated Original Title:** {translated_title}")
+                
+                                if rating is not None:
+                                    st.write(f"**⭐ Rating:** {rating}")
+                                
+                                if genres is not None:
+                                    st.markdown(f"**🎭 Genres:** {genres}")
+
+                                if link is not None:
+                                    st.markdown(f"**📺 [Get more details]({link})**")
                                 st.markdown('')
-                                st.markdown('')
-                                st.markdown('')
-                                st.markdown('')
-                                st.markdown('')
-                                st.markdown(f"**📺 [Get more details]({link})**")
-                                st.write(f"**⭐ MyDramaList Rating:** {score}")
-                        st.write(f"**📖 Synopsis:** {synopsis}")
+                        
+                        if synopsis is not None:
+                            st.write(f"**📖 Synopsis:** {synopsis}")
                 #else:
                     #st.write(f" - {r}")  # If no data found, just display title
 
