@@ -146,11 +146,13 @@ with st.container():
                                 
                                 if translated_title is not None:
                                     st.markdown(f"**🔄 Translated Original Title:** {translated_title}")
-                
+                                
                                 if rating is not None:
                                     st.write(f"**⭐ Rating:** {rating}")
                                 
                                 if genres is not None:
+                                    genres = genres.strip("[]").replace("'", "") # genres = string/text
+                                    genre_tags = [g.strip() for g in genres.split(",")] # genre_tags = iterable list
                                     st.markdown(f"**🎭 Genres:** {genres}")
 
                                 if link is not None:
