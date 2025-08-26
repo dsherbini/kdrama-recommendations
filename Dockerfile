@@ -9,11 +9,10 @@ LABEL app.name="Kdramarama"
 # Set working directory
 WORKDIR /kdrama-recommendations
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install minimal system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
-    software-properties-common \
     git \
     && rm -rf /var/lib/apt/lists/*
 
