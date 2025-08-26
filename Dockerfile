@@ -37,12 +37,29 @@ RUN mkdir -p /kdrama-recommendations/data
 # Copy the rest of the application code into the container
 COPY . .
 
+## FOR LOCAL DEPLOYMENT/TESTING
 # Expose the Streamlit port
-EXPOSE 8502
+#EXPOSE 8502
 
 # Add a healthcheck for the container
-HEALTHCHECK CMD curl --fail http://localhost:8502/_stcore/health
+#HEALTHCHECK CMD curl --fail http://localhost:8502/_stcore/health
 
 # Run all commands sequentially in one line: generate drama data as csv, then run app
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8502", "--server.address=0.0.0.0"]
+#CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8502", "--server.address=0.0.0.0"]
+
+
+## FOR PRODUCTION ON HEROKU
+# Expose port (Heroku sets PORT dynamically)
+ENV PORT 8080
+ENV STREAMLIT_SERVER_HEADLESS true
+ENV STREAMLIT_SERVER_PORT $PORT
+ENV STREAMLIT_SERVER_ENABLECORS false
+
+EXPOSE $PORT
+
+# Healthcheck
+HEALTHCHECK CMD curl --fail http://localhost:$PORT/_stcore/health || exit 1
+
+# Run Streamlit app
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
 
