@@ -23,7 +23,7 @@ app.add_middleware(
         "https://kdrama-recommendations-seven.vercel.app",
         "https://kdrama-recommendations-68tpu10xv-danya-ss-projects-98ec0c6e.vercel.app",
         "https://kdrama-recommendations-hhmcjktr4-danya-ss-projects-98ec0c6e.vercel.app",
-        "https://k-drama-rama.com"
+        "https://www.k-drama-rama.com"
         ],
     allow_credentials=True,
     allow_methods=["*"],
