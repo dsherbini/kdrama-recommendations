@@ -15,13 +15,14 @@ import os
 
 app = FastAPI()
 
-# Enable CORS for local dev and Heroku frontend
+# Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000", # Local dev
         "https://kdrama-recommendations-seven.vercel.app",
         "https://kdrama-recommendations-68tpu10xv-danya-ss-projects-98ec0c6e.vercel.app",
+        "https://kdrama-recommendations-hhmcjktr4-danya-ss-projects-98ec0c6e.vercel.app",
         "https://k-drama-rama.com"
         ],
     allow_credentials=True,

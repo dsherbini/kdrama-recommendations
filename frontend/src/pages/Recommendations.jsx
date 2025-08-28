@@ -12,7 +12,7 @@ function App() {
   const [recommendations, setRecommendations] = useState([]);
 
   //const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
-  const API_URL = process.env.REACT_APP_API_URL || "https://kdramarama-backend-a44a9cb5e8b4.herokuapp.com"; // for heroku staging app
+  const API_URL = process.env.REACT_APP_API_URL || "https://kdramarama-backend-a44a9cb5e8b4.herokuapp.com";
 
   useEffect(() => {
     axios.get(`${API_URL}/titles`)
