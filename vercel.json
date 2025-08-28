@@ -2,7 +2,7 @@
     "name": "kdrama-frontend",
     "build": {
       "env": {
-        "REACT_APP_API_URL": "https://kdramarama-staging-d400cc47efde.herokuapp.com"
+        "REACT_APP_API_URL": "https://kdramarama-backend-a44a9cb5e8b4.herokuapp.com/"
       }
     }
   }
