@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false); // Sidebar is closed by default
 
   return (
     <div className="fixed top-0 left-0 h-screen z-50">
