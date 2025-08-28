@@ -52,6 +52,10 @@ class RecommendRequest(BaseModel):
     title: str
     n: int
 
+@app.get("/")
+def read_root():
+    return {"message": "K-Drama Recommendation API is running!", "endpoints": ["/titles", "/recommendations"]}
+
 @app.get("/titles")
 def get_titles():
     return df['Title'].unique().tolist()
