@@ -25,12 +25,18 @@ export default function Sidebar() {
         <div
           className="bg-white/30 backdrop-blur-md text-[#6ea3e8] h-full w-64 shadow-lg transition-all duration-300 p-4"
         >
+
+          {/* Close button */}
           <button
             className="mb-4 p-2 rounded bg-white/40 text-[#6ea3e8]"
             onClick={() => setIsOpen(false)}
           >
             <X />
           </button>
+
+          {/* App title */}
+          <h1 className="text-2xl font-bold mb-6 text-left px-4">Kdramarama</h1>
+
           <nav>
             <NavLink to="/" className="block px-4 py-2 hover:bg-white/50 rounded-md">
               Home
