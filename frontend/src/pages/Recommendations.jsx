@@ -12,21 +12,30 @@ function App() {
   const [recommendations, setRecommendations] = useState([]);
 
   //const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
-  const API_URL = process.env.REACT_APP_API_URL || "https://kdramarama-staging-d400cc47efde.herokuapp.com/";
+  const API_URL = process.env.REACT_APP_API_URL || "https://kdramarama-staging-d400cc47efde.herokuapp.com"; // for heroku staging app
 
   useEffect(() => {
-    axios.get(`${API_URL}/titles`).then((res) => {
-      setTitles(res.data.map((t) => ({ value: t, label: t })));
-    });
+    axios.get(`${API_URL}/titles`)
+      .then((res) => {
+        setTitles(res.data.map((t) => ({ value: t, label: t })));
+      })
+      .catch((error) => {
+        console.error("Error fetching titles:", error);
+      });
   }, [API_URL]);
 
   const handleRecommend = async () => {
-    if (!selectedTitle) return;
-    const res = await axios.post(`${API_URL}/recommendations`, {
-      title: selectedTitle.value,
-      n: numRecs,
-    });
-    setRecommendations(res.data);
+    if (!selectedTitle || !numRecs) return;
+    
+    try {
+      const res = await axios.post(`${API_URL}/recommendations`, {
+        title: selectedTitle.value,
+        n: numRecs,
+      });
+      setRecommendations(res.data);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    }
   };
 
   return (
