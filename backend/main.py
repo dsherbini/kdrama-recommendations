@@ -21,7 +21,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000", # Local dev
         "https://kdrama-recommendations-seven.vercel.app",
-        "https://kdrama-recommendations-68tpu10xv-danya-ss-projects-98ec0c6e.vercel.app/",
+        "https://kdrama-recommendations-68tpu10xv-danya-ss-projects-98ec0c6e.vercel.app",
         "https://k-drama-rama.com"
         ],
     allow_credentials=True,
