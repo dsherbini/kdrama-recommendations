@@ -1,7 +1,6 @@
 // src/components/GenreChips.jsx
 // Displays genres as colored chips on the card popup
 
-// src/components/GenreChip.jsx
 export default function GenreChip({ genre }) {
   // Normalize genre text for display
   let genresArray = [];
