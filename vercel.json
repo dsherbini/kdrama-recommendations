@@ -1,11 +1,8 @@
 {
-    "name": "kdramarama-frontend",
+    "name": "kdrama-frontend",
     "build": {
       "env": {
         "REACT_APP_API_URL": "https://kdramarama-staging-d400cc47efde.herokuapp.com"
       }
-    },
-    "buildCommand": "cd frontend && npm run build",
-    "outputDirectory": "frontend/build",
-    "installCommand": "cd frontend && npm install"
+    }
   }
