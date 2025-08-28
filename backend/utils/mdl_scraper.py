@@ -229,26 +229,82 @@ def get_popover_data(ids):
 korean_original_titles, translated_original_titles, image_urls, scores, synopses, genres_list, skipped_drama_ids = get_popover_data(ids)
 
 # Re-scrape any skipped-over dramas individually
+def get_single_drama_popover(drama_id):
+    """
+    Returns popover data for a single drama ID
+    """
+    try:
+        locate_drama = driver.find_element(By.CSS_SELECTOR, f"#ml{drama_id} > td.mdl-style-col-title.sort1 > a")
+        actions = ActionChains(driver)
+        actions.move_to_element(locate_drama).perform()
+        time.sleep(2)
+
+        WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, f"#qtip-{drama_id}-title-content"))
+        )
+
+        popover = driver.find_element(By.CSS_SELECTOR, f"#qtip-{drama_id}-title-content")
+
+        # Extract fields
+        try: korean_title = popover.find_element(By.CSS_SELECTOR, ".original-title").text.replace(" (Korean Drama)", "")
+        except: korean_title = "Original Title Unavailable"
+
+        try:
+            drama_slug = popover.find_element(By.CSS_SELECTOR, "h2 a").get_attribute("href").split("/")[-1]
+            translated_title = ''.join([c for c in drama_slug if not c.isdigit()]).lstrip("-").replace("-", " ").title()
+        except:
+            translated_title = "Translation Unavailable"
+
+        try: image_url = popover.find_element(By.TAG_NAME, "img").get_attribute("src")
+        except: image_url = "Image Unavailable"
+
+        try: score = popover.find_element(By.CLASS_NAME, "score").text
+        except: score = "Rating Unavailable"
+
+        try: synopsis = popover.find_element(By.CLASS_NAME, "synopsis").text
+        except: synopsis = "Synopsis Unavailable"
+
+        try:
+            genres = [g.text for g in popover.find_elements(By.CSS_SELECTOR, ".genre-tags a")]
+        except:
+            genres = ["Genre Unavailable"]
+
+        return korean_title, translated_title, image_url, score, synopsis, genres
+
+    except Exception as e:
+        print(f"Failed to scrape drama {drama_id}: {e}")
+        return None, None, None, None, None, None
+
 def grab_and_insert_one_drama(kdrama_id):
-    
+    """
+    Grabs data for one drama and inserts it into the correct position in the list
+    """
+
     # Get popover data for individual drama
-    og_title, trans_og_title, img_url, indv_score, indv_synopsis, indv_genres_list = get_popover_data(kdrama_id)
+    og_title, trans_title, img_url, indv_score, indv_synopsis, indv_genres = get_single_drama_popover(kdrama_id)
     
+    # If title is not found, skip this drama
+    if og_title is None:
+        print(f"Skipping drama {kdrama_id} because data was not found.")
+        return
+
     # Get position / order of the drama from the original ids list
     position = ids.index(kdrama_id)
 
     # Insert data into each data list
     korean_original_titles.insert(position, og_title)
-    translated_original_titles.insert(position, trans_og_title)
+    translated_original_titles.insert(position, trans_title)
     image_urls.insert(position, img_url)
     scores.insert(position, indv_score)
     synopses.insert(position, indv_synopsis)
-    genres_list.insert(position, indv_genres_list)
+    genres_list.insert(position, indv_genres)
 
+# Loop through skipped drama IDs and re-scrape them
 for drama_id in skipped_drama_ids:
     grab_and_insert_one_drama(drama_id)
 
-# print output
+
+# Print output
 print(korean_original_titles)
 print(translated_original_titles)
 print(image_urls)
@@ -281,7 +337,26 @@ my_data = get_dramas(titles, korean_original_titles, translated_original_titles,
 print(my_data.head())
 print(len(my_data))
 
-# Save as CSV
+# View drama details by title
+def get_drama_by_title(title, df):
+    """
+    Returns the row in the DataFrame for a given drama title.
+    title: string (exact title or part of it)
+    df: your scraped DataFrame (my_data)
+    """
+    # Case-insensitive search
+    result = df[df['Title'].str.lower() == title.lower()]
+    
+    if result.empty:
+        return f"No drama found with title '{title}'"
+    else:
+        return result.to_dict(orient='records')[0]
+    
+title = "A Virtuous Business"
+details = get_drama_by_title(title, my_data)
+print(details)
+
+# Save all data as CSV
 today = date.today() # get today's date for file name
 output_dir = './data' # save to this folder
 os.makedirs(output_dir, exist_ok=True) # make the folder if it doesn't already exist
@@ -291,71 +366,4 @@ print(f"File saved successfully at {output_path}")
 
 # Close the browser
 driver.quit()
-
-
-#####################################################################################################
-# sandbox
-
-# Getting popover data for soudtrack #1: id # is 713865
-soundtrack_id = ['713865']
-soundtrack_original_title, soundtrack_translated_original_title, soundtrack_image_url, soundtrack_score, soundtrack_synopsis, soundtrack_genres_list = get_popover_data(soundtrack_id)
-korean_original_titles.insert(104, soundtrack_original_title)
-translated_original_titles.insert(104, soundtrack_translated_original_title)
-image_urls.insert(104,soundtrack_image_url)
-scores.insert(104,soundtrack_score)
-synopses.insert(104,soundtrack_synopsis)
-genres_list.insert(104,soundtrack_genres_list)
-
-
-print(ids[104])
-my_data.iloc['Something in the Rain']
-translated_original_titles[104]
-ids.index('713865')
-
-# Testing out code to get popover data with one title
-
-# Find the element that triggers the popover (e.g., a show title)
-locate_drama_test = driver.find_element(By.CSS_SELECTOR, "#ml729303 > td.mdl-style-col-title.sort1 > a")
-
-# Use ActionChains to hover over the element
-actions = ActionChains(driver)
-actions.move_to_element(locate_drama_test).perform()
-
-# Wait for popover to appear
-time.sleep(2)
-
-# Scrape the popover content
-popover_test = driver.find_element(By.CSS_SELECTOR, "#qtip-729303-title-content") 
-
-# Get translation of original title
-drama_slug = popover_test.find_element(By.CSS_SELECTOR, "h2 a").get_attribute("href").split("/")[-1]  # Extracts the last part of the URL
-# Remove the hyphen and capitalize each word
-clean_slug = ''.join([char for char in drama_slug if not char.isdigit()]).lstrip("-").replace("-", " ").title()
-print(clean_slug)
-
- # If it exists, extract original title and clean
-original_title_test = popover_test.find_element(By.CSS_SELECTOR, ".original-title").text
-if " (Korean Drama)" in original_title_test:
-    original_title_test = original_title_test.replace(" (Korean Drama)", "")
-
-print(original_title_test)
-
-
-# Find all individual genre tags within the .genre-tags container, which are <a> tags
-genre_elements = popover_test.find_elements(By.CSS_SELECTOR, ".genre-tags a")
-    
-# Extract the text of each <a> tag and store them in a list
-genres_test = [genre.text for genre in genre_elements]
-
-print(genres_test)
-
-# Extract image, score, and synopsis
-image_url = popover.find_element(By.TAG_NAME, "img").get_attribute("src")
-score = popover.find_element(By.CLASS_NAME, "score").text
-synopsis = popover.find_element(By.CLASS_NAME, "synopsis").text
-
-# Print results
-print("Image URL:", image_url)
-print("Score:", score)
-print("Synopsis:", synopsis)
 

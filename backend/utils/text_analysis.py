@@ -9,6 +9,8 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+from datetime import date
 
 # text analysis packages
 import spacy
@@ -28,7 +30,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 #%%
 # import k-drama data
 # designate output directory
-scraped_data = pd.read_csv('./data/scraped_data_img_2025-04-05.csv')
+scraped_data = pd.read_csv('./data/scraped_data_img_2025-08-27.csv')
 #%%
 
 ############################### TEXT PROCESSING ###############################
@@ -453,15 +455,11 @@ def process_kdrama_features(df, text_column='Reviews'):
 kdramas_final = process_kdrama_features(kdramas,text_column='Review')
 
 
-#save as csv
-# designate output directory
-output_dir = './data'
-os.makedirs(output_dir, exist_ok=True)  # ensure directory exists
-
-# designate filepath
-output_path = os.path.join(output_dir,'kdrama_data_with_features.csv')
-
-# save to csv
+# Save features file as csv
+today = date.today() # get today's date for file name
+output_dir = './data' # save to this folder
+os.makedirs(output_dir, exist_ok=True) # make the folder if it doesn't already exist
+output_path = os.path.join(output_dir, f'kdrama_data_with_features_{today}.csv') # filename
 kdramas_final.to_csv(output_path, index=False, encoding='utf-8')
 print(f"File saved successfully at {output_path}")
 #%%

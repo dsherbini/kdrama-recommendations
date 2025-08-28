@@ -1,1 +1,1 @@
-web: streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0
+web: cd backend && gunicorn main:app -k uvicorn.workers.UvicornWorker
