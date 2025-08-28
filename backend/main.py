@@ -9,7 +9,7 @@ FAST API for routing requests to the recommendation system
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from .utils.recommendation_system import recommend_kdrama
+from utils.recommendation_system import recommend_kdrama
 import pandas as pd
 import os
 
