@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from .utils.recommendation_system import recommend_kdrama
 import pandas as pd
+import os
 
 app = FastAPI()
 
@@ -31,7 +32,9 @@ app.add_middleware(
 )
 
 # Load data
-df = pd.read_csv("utils/data/kdrama_data_with_features_2025-08-27.csv")
+current_dir = os.path.dirname(os.path.abspath(__file__)) # Get the directory where main.py is located
+csv_path = os.path.join(current_dir, "utils", "data", "kdrama_data_with_features_2025-08-27.csv")
+df = pd.read_csv(csv_path)
 
 # Process features for recommendation system
 def process_features(df):
