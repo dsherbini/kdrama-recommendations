@@ -11,7 +11,8 @@ function App() {
   const [numRecs, setNumRecs] = useState(null); // Keep number of recs as null initially. Can change this to 3 (or any number) instead
   const [recommendations, setRecommendations] = useState([]);
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  //const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+  const API_URL = "https://kdramarama-staging.herokuapp.com";
 
   useEffect(() => {
     axios.get(`${API_URL}/titles`).then((res) => {
