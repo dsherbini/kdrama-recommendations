@@ -14,3 +14,5 @@ selenium==4.28.1
 webdriver_manager==4.0.2
 fastapi
 uvicorn[standard]
+gunicorn
+pydantic

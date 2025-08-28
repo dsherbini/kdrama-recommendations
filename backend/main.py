@@ -17,14 +17,14 @@ app = FastAPI()
 # List all allowed origins
 #origins = [
 #    "http://localhost:3000",  # Local dev
-#    "https://kdramarama-staging-d400cc47efde.herokuapp.com/",  # Staging frontend
+#    "https://kdramarama-staging-d400cc47efde.herokuapp.com",  # Staging frontend
 #    "https://kdramarama-production-169470a72f48.herokuapp.com",  # Production frontend
 #]
 
 # Enable CORS for local dev and Heroku frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://kdramarama-staging-d400cc47efde.herokuapp.com/"],
+    allow_origins=["https://kdramarama-staging-d400cc47efde.herokuapp.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
