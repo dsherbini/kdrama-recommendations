@@ -20,7 +20,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000", # Local dev
-        "https://kdrama-recommendations-seven.vercel.app" # Vercel frontend url
+        "https://kdrama-recommendations-seven.vercel.app",
+        "https://kdrama-recommendations-68tpu10xv-danya-ss-projects-98ec0c6e.vercel.app/",
+        "https://k-drama-rama.com"
         ],
     allow_credentials=True,
     allow_methods=["*"],
