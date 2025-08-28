@@ -1,6 +1,7 @@
 {
-    "scripts": {
-      "heroku-postbuild": "cd frontend && npm install && npm run build"
-    }
+  "name": "kdramarama",
+  "scripts": {
+    "build": "echo 'No build needed for backend'"
   }
+}
   
