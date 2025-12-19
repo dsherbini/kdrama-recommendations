@@ -26,7 +26,7 @@ Kdramarama is a web application for k-drama recommendations. Recommendations are
 - **Word & Phrase Frequency Analysis**: I use CountVectorizer and TextBlob to extract common words and phrases in my drama reviews, and visualize the results with word clouds.
 - **Semantic Similarity Analysis**: I then use Word2Vec embeddings to measure similarity between extracted phrases based on cosine similarity in order to consolidate similar phrases and refine a list of common themes to provide a starting point for feature engineering.
 - **Sentiment Analysis**: I use NLTK's sentiment library to generate sentiment polarity scores for each review, as well as context-specific polarity scores for specific key phrases found in reviews (these phrases are gleaned in the previous step).
-- **Feature Engineering**: I use review and phrase-specific polarity scores as features. Additionally, I also creates binary features based on key words and phrases found in reviews.
+- **Feature Engineering**: I use review and phrase-specific polarity scores as features. Additionally, I also create binary features based on key words and phrases found in reviews.
 - **Recommendation Model**: My recommendation model computes cosine similary for all drama titles in order to generate the N most similar dramas to a selected title.
 
 ---
