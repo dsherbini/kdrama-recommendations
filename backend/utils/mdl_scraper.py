@@ -50,11 +50,11 @@ username = st.secrets["mydramalist"]["username"]
 password = st.secrets["mydramalist"]["password"]
 
 # Enter email
-email_input = driver.find_element(By.XPATH, '//*[@id="content"]/div/div[2]/div/div/div[2]/div[1]/div/div/form/div[2]/input')
+email_input = driver.find_element(By.XPATH, '//*[@id="login-register-username"]')
 email_input.send_keys(username)
 
 # Enter password
-password_input = driver.find_element(By.XPATH, '//*[@id="content"]/div/div[2]/div/div/div[2]/div[1]/div/div/form/div[3]/input')
+password_input = driver.find_element(By.XPATH, '//*[@id="login-register-password"]')
 password_input.send_keys(password)
 
 # Press Enter to log in
