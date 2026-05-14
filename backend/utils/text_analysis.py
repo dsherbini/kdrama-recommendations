@@ -30,7 +30,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer # sentiment analysis
 #%%
 # import k-drama data
 # designate output directory
-scraped_data = pd.read_csv('./data/scraped_data_img_2025-08-27.csv')
+scraped_data = pd.read_csv('./data/scraped_data_img_2026-05-14.csv')
 #%%
 
 ############################### TEXT PROCESSING ###############################
