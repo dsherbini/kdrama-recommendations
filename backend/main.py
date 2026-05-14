@@ -32,7 +32,7 @@ app.add_middleware(
 
 # Load data
 current_dir = os.path.dirname(os.path.abspath(__file__)) # Get the directory where main.py is located
-csv_path = os.path.join(current_dir, "utils", "data", "kdrama_data_with_features_2025-08-27.csv")
+csv_path = os.path.join(current_dir, "utils", "data", "kdrama_data_with_features_2026-05-14.csv")
 df = pd.read_csv(csv_path)
 
 # Process features for recommendation system
